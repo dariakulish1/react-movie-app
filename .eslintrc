@@ -1,0 +1,58 @@
+{
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest",
+    "project": "tsconfig.json",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["react", "prettier", "import"],
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "react-app",
+    "plugin:react/jsx-runtime",
+    "plugin:prettier/recommended"
+  ],
+  "settings": {
+    "sourceType": "module",
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "consistent-return": "warn",
+    "default-param-last": "off",
+    "implicit-arrow-linebreak": "off",
+    "import/named": "off",
+    "import/no-cycle": "off",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "linebreak-style": "off",
+    "no-console": "warn",
+    "no-multiple-empty-lines": [2, { "max": 1, "maxEOF": 0 }],
+    "no-redeclare": 2,
+    "no-shadow": "off",
+    "no-undef": "warn",
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "none",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "prettier/prettier": 2,
+    "react/destructuring-assignment": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "warn"
+  }
+}
