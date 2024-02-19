@@ -1,0 +1,13 @@
+.FilmsList {
+    background: red;
+    height: 500px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .FlexBox {
+        background: pink;
+        width: 30%;
+        height: 300px;
+        margin: 20px;
+    }
+}
