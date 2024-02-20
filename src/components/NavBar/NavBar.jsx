@@ -8,9 +8,9 @@ export const NavBar = () => {
     <div className="NavDiv">
       <div className="NavTop">
         <p className="NameLabel">STRICHKA</p>
-        {/* <Routes>
-        <Route path="/favorites" element={<Favorites />} />
-      </Routes> */}
+        <Routes>
+          <Route path="/favorites" element={<Favorites />} />
+        </Routes>
       </div>
       <input
         className="SearchingBar"
