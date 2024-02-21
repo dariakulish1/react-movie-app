@@ -1,7 +1,16 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import '../../pages/Favorites/Favorites.scss';
+import { NavLink } from 'react-router-dom';
 
 export const Favorites = () => {
-  return <NavLink className="FavoriteMovie">Favorites</NavLink>;
+  return (
+    <header className="NavTop">
+      <NavLink to="/" className="NameLabel">
+        STRICHKA
+      </NavLink>
+      <NavLink className="FavoriteMovie" to="/favorites">
+        Favorites
+      </NavLink>
+    </header>
+  );
 };

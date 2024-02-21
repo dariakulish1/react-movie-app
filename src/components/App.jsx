@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavBar } from './NavBar/NavBar';
 import { MovieList } from './MovieList/MovieList';
-import './style/MovieApp.scss';
+import { Favorites } from '../pages/Favorites/Favorites';
+import { Route, Routes } from 'react-router-dom';
+import './style/App.scss';
 
-export const MovieApp = () => {
+export const App = () => {
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   fetch('https://api.themoviedb.org/3/authentication', options)
@@ -12,8 +13,10 @@ export const MovieApp = () => {
     .catch((err) => console.error(err));
   return (
     <div className="MovieDiv">
-      <NavBar />
-      <MovieList />
+      <Routes>
+        <Route path="/" element={<MovieList />} />
+        <Route path="/favorites" element={<Favorites />} />
+      </Routes>
     </div>
   );
 };
