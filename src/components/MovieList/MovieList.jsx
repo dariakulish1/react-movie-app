@@ -1,24 +1,17 @@
 import React from 'react';
 import './MovieList.scss';
-import { NavBar } from '../NavBar/NavBar';
-
+import { ServerImg } from '../../images/ServerImg.png';
+import '../../Inter/static/Inter-Medium.ttf';
+import { FlexBoxes } from '../FlexBoxes/FlexBoxes';
 export const MovieList = () => {
   return (
-    <section className="FilmsList">
-      <NavBar />
-      <input
-        className="SearchingBar"
-        type="text"
-        placeholder="Write film name..."
-      />
-      <div className="DivList">
-        <div className="FlexBox"></div>
-        <div className="FlexBox"></div>
-        <div className="FlexBox"></div>
-        <div className="FlexBox"></div>
-        <div className="FlexBox"></div>
-        <div className="FlexBox"></div>
-      </div>
-    </section>
+    <div className="DivList">
+      <FlexBoxes />
+      <FlexBoxes />
+      <FlexBoxes />
+      <FlexBoxes />
+      <FlexBoxes />
+      <FlexBoxes />
+    </div>
   );
 };

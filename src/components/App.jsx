@@ -1,5 +1,5 @@
 import React from 'react';
-import { MovieList } from './MovieList/MovieList';
+import { SearchBar } from './SearchBar/SearchBar';
 import { Favorites } from '../pages/Favorites/Favorites';
 import { Route, Routes } from 'react-router-dom';
 import './style/App.scss';
@@ -14,7 +14,7 @@ export const App = () => {
   return (
     <div className="MovieDiv">
       <Routes>
-        <Route path="/" element={<MovieList />} />
+        <Route path="/" element={<SearchBar />} />
         <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </div>
