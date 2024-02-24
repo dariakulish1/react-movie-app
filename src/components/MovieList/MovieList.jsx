@@ -5,7 +5,7 @@ import '../../Inter/static/Inter-Medium.ttf';
 import { FlexBoxes } from '../FlexBoxes/FlexBoxes';
 export const MovieList = () => {
   return (
-    <div className="DivList">
+    <div className="DivList container">
       <FlexBoxes />
       <FlexBoxes />
       <FlexBoxes />

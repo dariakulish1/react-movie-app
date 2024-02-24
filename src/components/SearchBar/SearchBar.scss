@@ -1,9 +1,8 @@
 .FilmsList {
     background: red;
-    height: 1200px;
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     .SearchingBar {
         width: 35%;
         height: 40px;

@@ -5,7 +5,7 @@ import { MovieList } from '../MovieList/MovieList';
 
 export const SearchBar = () => {
   return (
-    <section className="FilmsList">
+    <section className="FilmsList container">
       <NavBar />
       <input
         className="SearchingBar"

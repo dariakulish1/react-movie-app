@@ -6,7 +6,7 @@ import { CineFilm } from '../../images/far magnifying-glass.svg';
 export const NavBar = () => {
   return (
     <>
-      <div className="NavDiv">
+      <div className="NavDiv container">
         <header className="NavTop">
           <NavLink to="/" className="NameLabel">
             STRICHKA
