@@ -1,21 +1,31 @@
 import React from 'react';
 import './FlexBoxes.scss';
-import serverImg from '../../images/ServerImg.png';
-import { Bounding } from '../../images/bounding-24.svg';
-import { SolidStar } from '../../images/star-solid.svg';
+import serverImg from '../../images/posterimg.jpg';
+import bounding from '../../images/bounding-24.svg';
+import solidStar from '../../images/star-solid.svg';
+
 export const FlexBoxes = () => {
   return (
     <div className="FlexBox">
-      <div className="ArtDiv">
-        <img className="MovieImg" src={serverImg} alt="" />
+      <img className="MovieImg" src={serverImg} alt="" />
+      <div className="bottom-panel">
         <div className="Rating">
-          {/* <SolidStar /> */}
-          <p className="RatingNum">8.0</p>
+          <p className="RatingNum">
+            <img className="solid-star" src={solidStar} alt="" />
+            8.0
+          </p>
         </div>
-        <div className="SavedMovie">{/* <Bounding /> */}</div>
-        <div className="MovieTitles">
-          <h3>Movie title</h3>
+        <div className="SavedMovie">
+          <img className="bounding" src={bounding} alt="" />
         </div>
+      </div>
+      <div className="MovieTitles">
+        <p className="title">Movie title</p>
+        <p className="original-title">Movie original title</p>
+        <p className="genres">Genre 1</p>
+        <div className="age">18+</div>
+        <div className="quality">Full HD</div>
+        <div className="rate-num">IMDb 8.5</div>
       </div>
     </div>
   );
