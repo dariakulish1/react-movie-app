@@ -1,14 +1,12 @@
 import React from 'react';
 import './SearchBar.scss';
-import { NavBar } from '../NavBar/NavBar';
 import { MovieList } from '../MovieList/MovieList';
 
 export const SearchBar = () => {
   return (
-    <section className="FilmsList container">
-      <NavBar />
+    <section className="films-list container">
       <input
-        className="SearchingBar"
+        className="films-list__input"
         type="text"
         placeholder="Write film name..."
       />

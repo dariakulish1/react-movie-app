@@ -6,20 +6,20 @@ import solidStar from '../../images/star-solid.svg';
 
 export const FlexBoxes = () => {
   return (
-    <div className="FlexBox">
-      <img className="MovieImg" src={serverImg} alt="" />
+    <div className="flex-box">
+      <img className="flex-box__img" src={serverImg} alt="" />
       <div className="bottom-panel">
-        <div className="Rating">
-          <p className="RatingNum">
+        <div className="bottom-panel__rating">
+          <p className="bottom-panel__rating-num">
             <img className="solid-star" src={solidStar} alt="" />
             8.0
           </p>
         </div>
-        <div className="SavedMovie">
+        <div className="bottom-panel__saved-movie">
           <img className="bounding" src={bounding} alt="" />
         </div>
       </div>
-      <div className="MovieTitles">
+      <div className="flex-box__movie-titles">
         <p className="title">Movie title</p>
         <p className="original-title">Movie original title</p>
         <p className="genres">Genre 1</p>

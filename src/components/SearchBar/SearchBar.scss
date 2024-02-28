@@ -1,8 +1,9 @@
-.FilmsList {
+.films-list {
     background: rgb(169, 62, 62);
+    padding-top: 40px;
     display: flex;
     flex-direction: column;
-    .SearchingBar {
+    .films-list__input {
         width: 640px;
         height: 44px;
         border: 1px solid #D9D9D9;
