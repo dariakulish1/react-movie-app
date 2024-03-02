@@ -7,13 +7,13 @@ export const NavBar = () => {
   return (
     <>
       <div className="nav-div">
-        <header className="nav-div__navtop">
-          <div className="nav-div__navtop__pages">
-            <NavLink to="/" className="NameLabel">
+        <header className="nav-div__nav-top">
+          <div className="nav-div__pages">
+            <NavLink to="/" className="nav-div__name-label">
               <img src={cinefilm} />
               STRICHKA
             </NavLink>
-            <NavLink className="FavoriteMovie" to="/favorites">
+            <NavLink className="nav-div__favorite-movie" to="/favorites">
               Favorites
             </NavLink>
           </div>

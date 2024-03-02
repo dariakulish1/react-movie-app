@@ -5,28 +5,28 @@
     margin: 10px;
     border-radius: 16px;
     box-shadow: 1px 1px 1px 1px rgba(38, 38, 38, 0.075);
-}
-.flex-box__img {
-    width: 293px;
-    height: 400px;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    z-index: 1;
-}
-.bottom-panel {
-    width: 293px;
-    height: 40px;
-    margin-top: -43px;
-    z-index: 2;
-    position: absolute;
-}
-.bottom-panel__rating {
+    &__server-img {
+        width: 293px;
+        height: 400px;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        z-index: 1;
+    }
+    &__bottom-panel {
+        width: 293px;
+        height: 40px;
+        margin-top: -43px;
+        z-index: 2;
+        position: absolute;
+    }
+    &__rating-box {
     width: 79px;
     height: 40px;
     background: orange;
     border-top-right-radius: 12px;
     float: left;
-    .bottom-panel__rating-num {
+    }
+    &__rating-num {
         color: white;
         font-family: "Inter", sans-serif;
         text-align: center;
@@ -34,51 +34,51 @@
         font-weight: 700;
         padding: 10px;
     }
-}
-.bottom-panel__saved-movie {
-    width: 56px;
-    height: 40px;
-    background: #262626;
-    border-top-left-radius: 16px;
-    float: right;
-    text-align: center;
-}
-.flex-box__movie-titles{
-    width: 285px;
-    height: 90px;
-    float: left;
-    margin-top: 15px;
-    margin-left: 10px;
-}
-.title {
-    font-family: "Inter", sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    padding: 3px;
-}
-.solid-star {
-    width: 20px;
-    padding-right: 3px;
-}
-.bounding {
-    width: 25px;
-    padding: 10px;
-}
-.original-title, .genres {
-    color: #808080;
-    font-family: "Inter", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    padding: 3px;
-}
-.genres {
-    font-size: 13px;
-    padding: 3px;
-}
-.age, .quality, .rate-num {
-    border-radius: 4px;
-    border: 0.5px solid black;
-    float: left;
-    padding: 3px;
-    margin: 3px;
+    &__solid-star {
+        width: 20px;
+        padding-right: 3px;
+    }
+    &__saved-movie {
+        width: 56px;
+        height: 40px;
+        background: #262626;
+        border-top-left-radius: 16px;
+        float: right;
+        text-align: center;
+    }
+    &__bounding {
+        width: 25px;
+        padding: 10px;
+    }
+    &__movie-titles {
+        width: 285px;
+        height: 90px;
+        float: left;
+        margin-top: 15px;
+        margin-left: 10px;
+    }
+    &__main-title {
+        font-family: "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 20px;
+        padding: 3px;
+    }
+    &__original-title, &__movie-genres {
+        color: #808080;
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 15px;
+        padding: 3px;
+    }
+    &__movie-genres {
+        font-size: 13px;
+        padding: 3px;
+    }
+    &__age-limit, &__quality, &__rate-num {
+        border-radius: 4px;
+        border: 0.5px solid black;
+        float: left;
+        padding: 3px;
+        margin: 3px;
+    }
 }

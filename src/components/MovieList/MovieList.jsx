@@ -1,11 +1,10 @@
 import React from 'react';
 import './MovieList.scss';
 import { ServerImg } from '../../images/ServerImg.png';
-import '../../Inter/static/Inter-Medium.ttf';
 import { FlexBoxes } from '../FlexBoxes/FlexBoxes';
 export const MovieList = () => {
   return (
-    <div className="DivList container">
+    <div className="div-list container">
       <FlexBoxes />
       <FlexBoxes />
       <FlexBoxes />

@@ -1,0 +1,15 @@
+.nav-div {
+    &__favorite-movie {
+        color: white;
+        font-family: "Rubik", sans-serif;
+        font-size: 20px;
+        text-decoration: none;
+        float: right;
+        margin-right: 15%;
+        margin-top: 15px;
+        &:hover {
+            color: #FFAA00;
+            transition: 0.2s;
+        }
+    }
+}
