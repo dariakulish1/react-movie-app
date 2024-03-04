@@ -1,15 +1,11 @@
-.nav-div {
-    &__favorite-movie {
-        color: white;
-        font-family: "Rubik", sans-serif;
-        font-size: 20px;
-        text-decoration: none;
-        float: right;
-        margin-right: 15%;
-        margin-top: 15px;
-        &:hover {
-            color: #FFAA00;
-            transition: 0.2s;
-        }
+.saved-movie {
+    padding: 40px 24px;
+    &__page-head {
+        font-size: 40px;
+        font-family: "Inter", sans-serif;
+        font-weight: 700;
+    }
+    &__bounding {
+        padding: 10px;
     }
 }

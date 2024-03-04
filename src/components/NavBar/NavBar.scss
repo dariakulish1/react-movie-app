@@ -9,14 +9,29 @@
         max-width: 960px;
         margin: 0 auto;
     }
-    &__name-label{
+    &__label-img {
+        padding-right: 10px;
+    }
+    &__name-label, &__favorite-movie{
         color: white;
         font-family: "Rubik", sans-serif;
         font-size: 20px;
-        float: left;
-        margin-left: 15%;
-        margin-top: 15px;
+        padding: 15px 35px;
         text-decoration: none;
+    }
+    &__name-label {
+        float: left;
+        &:hover {
+            color: #FFAA00;
+            transition: 0.2s;
+        }
+    }
+    &__favorite-movie {
+        float: right;
+        &:hover {
+            color: #FFAA00;
+            transition: 0.2s;
+        }
     }
 }
 

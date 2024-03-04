@@ -4,7 +4,7 @@ import serverImg from '../../images/posterimg.jpg';
 import bounding from '../../images/bounding-24.svg';
 import solidStar from '../../images/star-solid.svg';
 
-export const FlexBoxes = () => {
+export const FlexBoxes = ({ activebounding }) => {
   return (
     <div className="flex-box">
       <img className="flex-box__server-img" src={serverImg} alt="" />
@@ -16,7 +16,12 @@ export const FlexBoxes = () => {
           </p>
         </div>
         <div className="flex-box__saved-movie">
-          <img className="flex-box__bounding" src={bounding} alt="" />
+          {/* <img className="flex-box__bounding" src={bounding} alt="" /> */}
+          {activebounding ? (
+            activebounding
+          ) : (
+            <img className="flex-box__bounding" src={bounding} alt="" />
+          )}
         </div>
       </div>
       <div className="flex-box__movie-titles">
