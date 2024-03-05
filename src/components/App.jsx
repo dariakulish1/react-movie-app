@@ -1,7 +1,7 @@
 import React from 'react';
-import { HomePage } from '../pages/HomePage/HomePage';
-import { FavoritesPage } from '../pages/Favorites/FavoritesPage';
-import { NavBar } from '../components/NavBar/NavBar';
+import { HomePage } from '../pages/HomePage';
+import { FavoritesPage } from '../pages/FavoritesPage';
+import { NavBar } from '../components/NavBar';
 import { Route, Routes } from 'react-router-dom';
 import './style/App.scss';
 

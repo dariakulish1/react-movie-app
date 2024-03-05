@@ -1,7 +1,11 @@
 import React from 'react';
 import './MovieList.scss';
-import { ServerImg } from '../../images/ServerImg.png';
-import { FlexBoxes } from '../FlexBoxes/FlexBoxes';
+import { FlexBoxes } from '../FlexBoxes';
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  activebounding: PropTypes.shape.isRequired,
+};
 export const MovieList = ({ activebounding }) => {
   return (
     <div className="div-list container">
@@ -14,3 +18,5 @@ export const MovieList = ({ activebounding }) => {
     </div>
   );
 };
+
+MovieList.propTypes = propTypes;

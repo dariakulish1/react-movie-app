@@ -3,24 +3,31 @@ import './FlexBoxes.scss';
 import serverImg from '../../images/posterimg.jpg';
 import bounding from '../../images/bounding-24.svg';
 import solidStar from '../../images/star-solid.svg';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export const FlexBoxes = ({ activebounding }) => {
+const propTypes = {
+  id: PropTypes.number.isRequired,
+  activebounding: PropTypes.shape.isRequired,
+};
+export const FlexBoxes = ({ activebounding, id }) => {
   return (
-    <div className="flex-box">
+    <Link className="flex-box" to={`/movie/${id}`}>
       <img className="flex-box__server-img" src={serverImg} alt="" />
       <div className="flex-box__bottom-panel">
         <div className="flex-box__rating-box">
           <p className="flex-box__rating-num">
-            <img className="flex-box__solid-star" src={solidStar} alt="" />
+            <img
+              className="flex-box__solid-star"
+              src={solidStar}
+              alt="solid-star"
+            />
             8.0
           </p>
         </div>
         <div className="flex-box__saved-movie">
-          {/* <img className="flex-box__bounding" src={bounding} alt="" /> */}
-          {activebounding ? (
-            activebounding
-          ) : (
-            <img className="flex-box__bounding" src={bounding} alt="" />
+          {activebounding || (
+            <img className="flex-box__bounding" src={bounding} alt="bounding" />
           )}
         </div>
       </div>
@@ -32,6 +39,8 @@ export const FlexBoxes = ({ activebounding }) => {
         <div className="flex-box__quality">Full HD</div>
         <div className="flex-box__rate-num">IMDb 8.5</div>
       </div>
-    </div>
+    </Link>
   );
 };
+
+FlexBoxes.propTypes = propTypes;

@@ -49,7 +49,9 @@
     &__bounding {
         width: 25px;
         padding: 10px;
-        
+        &:hover {
+            cursor: pointer;
+        }
     }
     &__movie-titles {
         width: 285px;

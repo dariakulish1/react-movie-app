@@ -1,6 +1,6 @@
 import React from 'react';
 import './HomePage.scss';
-import { MovieList } from '../../components/MovieList/MovieList';
+import { MovieList } from '../../components/MovieList';
 
 export const HomePage = () => {
   return (

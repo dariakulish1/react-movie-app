@@ -10,7 +10,11 @@ export const NavBar = () => {
         <header className="nav-div__nav-top">
           <div className="nav-div__pages">
             <NavLink to="/" className="nav-div__name-label">
-              <img className="nav-div__label-img" src={cinefilm} />
+              <img
+                className="nav-div__label-img"
+                src={cinefilm}
+                alt="label-img"
+              />
               STRICHKA
             </NavLink>
             <NavLink className="nav-div__favorite-movie" to="/favorites">
