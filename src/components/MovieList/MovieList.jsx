@@ -4,11 +4,14 @@ import { FlexBoxes } from '../FlexBoxes';
 
 const propTypes = {
   activebounding: PropTypes.shape.isRequired,
+  results: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  }).isRequired,
 };
-export const MovieList = ({ activebounding }) => {
+export const MovieList = ({ activebounding, results }) => {
   return (
     <div className="div-list container">
-      <FlexBoxes activebounding={activebounding} id={1} />
+      <FlexBoxes activebounding={activebounding} id={results?.id} />
       <FlexBoxes activebounding={activebounding} id={2} />
       <FlexBoxes activebounding={activebounding} id={3} />
       <FlexBoxes activebounding={activebounding} id={4} />

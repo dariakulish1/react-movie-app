@@ -1,7 +1,12 @@
+import PropTypes from 'prop-types';
 import './HomePage.scss';
 import { MovieList } from '../../components/MovieList';
 
-export const HomePage = () => {
+const propTypes = {
+  id: PropTypes.number.isRequired,
+};
+
+export const HomePage = ({ id }) => {
   return (
     <section className="films-list container">
       <input
@@ -9,7 +14,9 @@ export const HomePage = () => {
         type="text"
         placeholder="Write film name..."
       />
-      <MovieList />
+      <MovieList id={id} />
     </section>
   );
 };
+
+HomePage.propTypes = propTypes;
