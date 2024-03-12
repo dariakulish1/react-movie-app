@@ -1,5 +1,127 @@
-.info-box {
-    width: 100px;
-    height: 100px;
-    background: blue;
+.info-box{
+    &__back-case{
+        width: 100%;
+        height: 40px;
+        padding: 35px 0px 5px 0px;
+    }
+    &__back-botton {
+        text-decoration: none;
+        font-family: "Inter", sans-serif;
+        font-weight: 500;
+        font-size: 20px;
+    }
+    &__general-info {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    &__film-poster {
+        width: 359px;
+        border-radius: 16px;
+    }
+    &__detailed-info {
+        width: 550px;
+        height: 540px;
+    }
+    &__server-movie-name {
+        font-family: "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 34px;
+    }
+    &__small-title,&__server-movie-rating, &__server-data-release, &__server-genres-info, &__server-runtime-info {
+        color: #8C8C8C;
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+    }
+    &__server-movie-rating {
+        padding-top: 15px;
+    }
+    &__span-num {
+        color:#FFAA00 ;
+        font-weight: 600;
+    }
+    &__server-data-release, &__server-genres-info, &__server-runtime-info {
+        padding-top: 10px;
+    }
+    &__span-data, &__span-genres, &__span-runtime {
+        font-weight: 500;
+        color: black;
+        padding-left: 5px
+    }
+    &__buttons-box {
+        height: 60px;
+        padding: 10px 0px 10px 0px;
+    }
+    hr {
+        background: #F2F2F2;
+        border: 1px solid #F2F2F2;
+    }
+    &__two-buttons-container {
+        height: 50px;
+        width: 360px;
+        padding: 10px 0px 0px 0px;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__button-to-watch,&__button-to-add-to-fav {
+        background: black;
+        color: white;
+        border-radius: 8px;
+        width: 174px;
+        height: 44px;
+        padding: 0px 20px 0px 20px;
+        font-family: "Inter", sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    &__button-to-add-to-fav {
+        background: white;
+        border: 1px solid black;
+        color: black;
+    }
+    &__film-description {
+        padding: 10px 0px 10px 0px;
+        height: 150px;
+    }
+    &__description-text {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 18px;
+        padding: 15px 0px;
+    }
+    &__server-trailer-video {
+        width: 222px;
+        height: 120px;
+        border-radius: 10px;
+        padding: 10px 4px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    &__trailer-video {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    &__trailers-title, &__cast-title {
+        font-family: "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 20px;
+        padding: 15px 0px;
+    }
+    &__official-trailer-title {
+        font-family: "Inter", sans-serif;
+        font-weight: 500;
+        font-size: 13px;
+        color: #262626;
+    }
+    &__cast-case {
+        width: 912px;
+        height: 221px;
+        display: flex;
+        flex-wrap: wrap;
+    }
 }

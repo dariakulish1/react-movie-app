@@ -1,4 +1,3 @@
-import React from 'react';
 import './NavBar.scss';
 import { NavLink, Outlet } from 'react-router-dom';
 import cinefilm from '../../images/far magnifying-glass.svg';
@@ -14,7 +13,7 @@ export const NavBar = () => {
               src={cinefilm}
               alt="label-img"
             />
-            STRICHKA
+            Strichka
           </NavLink>
           <NavLink className="nav-div__favorite-movie" to="/favorites">
             Favorites

@@ -1,9 +1,8 @@
-import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { HomePage } from '../pages/HomePage';
 import { FavoritesPage } from '../pages/FavoritesPage';
-import { NavBar } from '../components/NavBar';
-import { Route, Routes } from 'react-router-dom';
-import { MovieInfoPage } from '../pages/MovieInfoPage/MovieInfoPage';
+import { NavBar } from './NavBar';
+import { MovieInfoPage } from '../pages/MovieInfoPage';
 import './style/App.scss';
 
 export const App = () => {
@@ -19,7 +18,7 @@ export const App = () => {
         <Route element={<NavBar />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
-          {/* <Route path={`/movie/${id}`} element={<MovieInfo />} /> */}
+          <Route path="/movie/:movieid" element={<MovieInfoPage />} />
         </Route>
       </Routes>
     </div>

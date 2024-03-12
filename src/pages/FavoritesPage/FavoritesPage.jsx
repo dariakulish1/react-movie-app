@@ -1,8 +1,7 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import './FavoritesPage.scss';
 import { MovieList } from '../../components/MovieList';
 import farstar from '../../images/far star.svg';
-import PropTypes from 'prop-types';
 
 const propTypes = {
   activebounding: PropTypes.shape.isRequired,

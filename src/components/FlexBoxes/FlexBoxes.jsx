@@ -1,10 +1,9 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './FlexBoxes.scss';
 import serverImg from '../../images/posterimg.jpg';
 import bounding from '../../images/bounding-24.svg';
 import solidStar from '../../images/star-solid.svg';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 const propTypes = {
   id: PropTypes.number.isRequired,
