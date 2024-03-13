@@ -6,12 +6,12 @@ import bounding from '../../images/bounding-24.svg';
 import solidStar from '../../images/star-solid.svg';
 
 const propTypes = {
-  id: PropTypes.number.isRequired,
+  movieid: PropTypes.number.isRequired,
   activebounding: PropTypes.shape.isRequired,
 };
-export const FlexBoxes = ({ activebounding, id }) => {
+export const FlexBoxes = ({ activebounding, movieid }) => {
   return (
-    <Link className="flex-box" to={`/movie/${id}`}>
+    <Link className="flex-box" to={`/movie/${movieid}`}>
       <img className="flex-box__server-img" src={serverImg} alt="" />
       <div className="flex-box__bottom-panel">
         <div className="flex-box__rating-box">
