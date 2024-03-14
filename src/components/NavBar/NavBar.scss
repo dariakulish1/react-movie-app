@@ -1,0 +1,38 @@
+.nav-div{
+    &__nav-top {
+        width: 100%;
+        height: 56px;
+        background: #1A1A1A;
+    }
+    &__pages {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__label-img {
+        padding-right: 10px;
+    }
+    &__name-label, &__favorite-movie{
+        color: white;
+        font-family: "Rubik", sans-serif;
+        font-size: 20px;
+        padding: 15px 35px;
+        text-decoration: none;
+    }
+    &__name-label {
+        text-transform: uppercase;
+        &:hover {
+            color: #FFAA00;
+            transition: 0.2s;
+        }
+    }
+    &__favorite-movie {
+        &:hover {
+            color: #FFAA00;
+            transition: 0.2s;
+        }
+    }
+}
+
