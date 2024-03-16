@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
 import serverImg from '../../images/posterimg.jpg';
 import trailer1 from '../../images/trailer1.png';
@@ -7,10 +8,34 @@ import trailer2 from '../../images/trailer2.png';
 import { CastBox } from '../../components/CastBox';
 
 const propTypes = {
-  movieid: PropTypes.number.isRequired,
+  // movieid: PropTypes.number.isRequired,
 };
-export const MovieInfoPage = ({ movieid }) => {
-  // const { movieid } = useParams();
+export const MovieInfoPage = ({
+  title,
+  original_title,
+  poster_path,
+  vote_average,
+  release_date,
+  overview,
+}) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YzJjNDU3N2FiNWY1MDAwMWRlNTBlMmQzYWVlMDgxMyIsInN1YiI6IjY1ZDQ2OGZiMDlkZGE0MDE4ODU4MDYzNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qg910gKgtA4qwRkHbQFWbYQLbpPR5H7vR9sO3rtqkMM',
+      },
+    };
+    fetch(
+      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+      options,
+    )
+      .then((response) => response.json())
+      .then((data) => setData(data.results))
+      .catch((err) => console.error(err));
+  }, []);
   return (
     <div className="info-box container">
       <div className="info-box__back-case">
@@ -26,19 +51,22 @@ export const MovieInfoPage = ({ movieid }) => {
         <div className="info-box__film-poster-box">
           <img
             className="info-box__film-poster"
-            src={serverImg}
+            src={`https://image.tmdb.org/t/p/w185/${poster_path}`}
             alt="serverImage"
           />
         </div>
         <div className="info-box__detailed-info">
-          <p className="info-box__server-movie-name">Judy</p>
-          <p className="info-box__small-title">Judy</p>
+          <p className="info-box__server-movie-name">{title}</p>
+          <p className="info-box__small-title">{original_title}</p>
           <p className="info-box__server-movie-rating">
-            Rating: <span className="info-box__span-num">8.0</span>
+            Rating:{' '}
+            <span className="info-box__span-num">
+              {vote_average.toFixed(1)}
+            </span>
           </p>
           <p className="info-box__server-data-release">
             Release data:
-            <span className="info-box__span-data">20 June 2022</span>
+            <span className="info-box__span-data">{release_date}</span>
           </p>
           <p className="info-box__server-genres-info">
             Genre:
@@ -63,12 +91,7 @@ export const MovieInfoPage = ({ movieid }) => {
           </div>
           <div className="info-box__film-description">
             <hr />
-            <p className="info-box__description-text">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime
-              optio sint veniam porro, unde eligendi possimus? Accusantium fuga
-              reiciendis inventore quibusdam dolor dolores perferendis maiores
-              magnam quidem. Vitae, earum dolore.
-            </p>
+            <p className="info-box__description-text">{overview}</p>
           </div>
         </div>
       </div>
