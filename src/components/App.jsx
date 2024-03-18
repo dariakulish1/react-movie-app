@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HomePage } from '../pages/HomePage';
@@ -6,6 +7,15 @@ import { NavBar } from './NavBar';
 import { MovieInfoPage } from '../pages/MovieInfoPage';
 import './style/App.scss';
 
+const propTypes = {
+  elements: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    original_title: PropTypes.string.isRequired,
+    vote_average: PropTypes.number.isRequired,
+    poster_path: PropTypes.shape.isRequired,
+  }).isRequired,
+};
 export const App = ({ title }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -25,42 +35,39 @@ export const App = ({ title }) => {
       .then((data) => setData(data.results))
       .catch((err) => console.error(err));
   }, []);
-  console.log('title: ', title);
   return (
     <div className="movie-div">
       <Routes>
-        {data.map(
-          ({
-            id,
-            title,
-            original_title,
-            vote_average,
-            poster_path,
-            release_date,
-            overview,
-          }) => {
-            return (
-              <Route element={<NavBar />}>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/favorites" element={<FavoritesPage />} />
-                <Route
-                  path="/movie/:movieid"
-                  element={
-                    <MovieInfoPage
-                      title={title}
-                      original_title={original_title}
-                      vote_average={vote_average}
-                      poster_path={poster_path}
-                      release_date={release_date}
-                      overview={overview}
-                    />
-                  }
-                />
-              </Route>
-            );
-          },
-        )}
+        <Route element={<NavBar />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route
+            path="/movie/:movieid"
+            element={data.map(
+              ({
+                title,
+                original_title,
+                vote_average,
+                poster_path,
+                release_date,
+                overview,
+              }) => {
+                return (
+                  <MovieInfoPage
+                    title={title}
+                    original_title={original_title}
+                    vote_average={vote_average}
+                    poster_path={poster_path}
+                    release_date={release_date}
+                    overview={overview}
+                  />
+                );
+              },
+            )}
+          />
+        </Route>
       </Routes>
     </div>
   );
 };
+App.propTypes = propTypes;
