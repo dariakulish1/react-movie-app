@@ -117,14 +117,6 @@ export const MovieInfoPage = ({}) => {
       <p className="info-box__cast-title">Cast</p>
       <div className="info-box__cast-case">
         <CastBox />
-        <CastBox />
-        <CastBox />
-        <CastBox />
-        <CastBox />
-        <CastBox />
-        <CastBox />
-        <CastBox />
-        <CastBox />
       </div>
     </div>
   );

@@ -56,28 +56,7 @@ export const HomePage = ({ id }) => {
         type="text"
         placeholder="Write film name..."
       />
-      {data.map(
-        ({
-          title,
-          original_title,
-          vote_average,
-          poster_path,
-          release_date,
-          overview,
-        }) => {
-          return (
-            <MovieList
-              id={id}
-              title={title}
-              original_title={original_title}
-              vote_average={vote_average}
-              poster_path={poster_path}
-              release_date={release_date}
-              overview={overview}
-            />
-          );
-        },
-      )}
+      <MovieList />
     </section>
   );
 };
