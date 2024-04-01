@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
 import serverImg from '../../images/posterimg.jpg';
@@ -10,14 +10,28 @@ import { CastBox } from '../../components/CastBox';
 const propTypes = {
   // movieid: PropTypes.number.isRequired,
 };
-export const MovieInfoPage = ({
-  title,
-  original_title,
-  poster_path,
-  vote_average,
-  release_date,
-  overview,
-}) => {
+export const MovieInfoPage = ({}) => {
+  const { movieid } = useParams();
+  const [data, setData] = useState({});
+  useEffect(() => {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YzJjNDU3N2FiNWY1MDAwMWRlNTBlMmQzYWVlMDgxMyIsInN1YiI6IjY1ZDQ2OGZiMDlkZGE0MDE4ODU4MDYzNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qg910gKgtA4qwRkHbQFWbYQLbpPR5H7vR9sO3rtqkMM',
+      },
+    };
+
+    fetch(
+      `https://api.themoviedb.org/3/movie/${movieid}?language=en-US`,
+      options,
+    )
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .then((response) => console.log('resp:', response))
+      .catch((err) => console.error(err));
+  }, [movieid]);
   return (
     <div className="info-box container">
       <div className="info-box__back-case">
@@ -33,22 +47,22 @@ export const MovieInfoPage = ({
         <div className="info-box__film-poster-box">
           <img
             className="info-box__film-poster"
-            src={`https://image.tmdb.org/t/p/w185/${poster_path}`}
+            src={`https://image.tmdb.org/t/p/w185/${data.poster_path}`}
             alt="serverImage"
           />
         </div>
         <div className="info-box__detailed-info">
-          <p className="info-box__server-movie-name">{title}</p>
-          <p className="info-box__small-title">{original_title}</p>
+          <p className="info-box__server-movie-name">{data.title}</p>
+          <p className="info-box__small-title">{data.original_title}</p>
           <p className="info-box__server-movie-rating">
             Rating:{' '}
             <span className="info-box__span-num">
-              {vote_average.toFixed(1)}
+              {data.vote_average ? data.vote_average.toFixed(1) : 0}
             </span>
           </p>
           <p className="info-box__server-data-release">
             Release data:
-            <span className="info-box__span-data">{release_date}</span>
+            <span className="info-box__span-data">{data.release_date}</span>
           </p>
           <p className="info-box__server-genres-info">
             Genre:
@@ -58,7 +72,9 @@ export const MovieInfoPage = ({
           </p>
           <p className="info-box__server-runtime-info">
             Runtime:
-            <span className="info-box__span-runtime">90 minutes</span>
+            <span className="info-box__span-runtime">
+              {data.runtime} minutes
+            </span>
           </p>
           <div className="info-box__buttons-box">
             <hr />
@@ -73,7 +89,7 @@ export const MovieInfoPage = ({
           </div>
           <div className="info-box__film-description">
             <hr />
-            <p className="info-box__description-text">{overview}</p>
+            <p className="info-box__description-text">{data.overview}</p>
           </div>
         </div>
       </div>
