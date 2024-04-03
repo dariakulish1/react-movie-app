@@ -18,6 +18,7 @@ export const HomePage = ({ id }) => {
   const promise = fetch(`movie/${id}`);
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -41,13 +42,20 @@ export const HomePage = ({ id }) => {
         return response.json();
       }
       setError(true);
+      setLoading(false);
       response.json();
       return Promise.reject(Error('Error'));
     })
-    .then((data) => setData(data.results))
+    .then((data) => {
+      setData(data.results);
+      setLoading(false);
+    })
     .catch((err) => console.error(err));
   if (error) {
     return <div>Sorry, it is error</div>;
+  }
+  if (loading) {
+    return <div>This page is loading...</div>;
   }
   return (
     <section className="films-list container">

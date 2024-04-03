@@ -8,6 +8,7 @@
     padding-top: 20px;
     &__actor-photo {
         width: 56px;
+        flex-shrink: 0;
         border-radius: 50%;
     }
     &__info-about-actor {
