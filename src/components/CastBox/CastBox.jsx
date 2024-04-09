@@ -1,31 +1,72 @@
 import './CastBox.scss';
+import { ThreeCircles } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import actorphoto from '../../images/actorphoto.png';
 import unnamed from '../../images/unnamed.png';
+import { headers } from '../../utils/headers';
 
-export const CastBox = ({}) => {
+export const CastBox = () => {
   const { movieid } = useParams();
   const [data, setData] = useState([]);
+  const promise = fetch(`movie/${movieid}`);
+  const [iserror, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  }, []);
   useEffect(() => {
     const options = {
       method: 'GET',
       headers: {
-        accept: 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YzJjNDU3N2FiNWY1MDAwMWRlNTBlMmQzYWVlMDgxMyIsInN1YiI6IjY1ZDQ2OGZiMDlkZGE0MDE4ODU4MDYzNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qg910gKgtA4qwRkHbQFWbYQLbpPR5H7vR9sO3rtqkMM',
+        headers,
       },
     };
 
     fetch(
       `https://api.themoviedb.org/3/movie/${movieid}/credits?language=en-US`,
-      options,
+      { headers },
     )
       .then((response) => response.json())
       .then((data) => setData(data.cast))
       .then((response) => console.log(response))
       .catch((err) => console.error(err));
   }, []);
+  promise
+    .then((response) => {
+      if (!response.ok) {
+        return Promise.reject(Error('Error'));
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setLoading(false);
+      setData(data.results);
+    })
+    .catch((err) => {
+      setError(false);
+      console.error(err);
+    });
+  if (loading) {
+    return (
+      <div>
+        <ThreeCircles
+          visible
+          height="100"
+          width="100"
+          color="#4fa94d"
+          ariaLabel="three-circles-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
+    );
+  }
+  if (iserror) {
+    return <div>Sorry, it is error</div>;
+  }
   return (
     <div className="info-cast-box">
       {data.map(({ character, name, profile_path }) => {

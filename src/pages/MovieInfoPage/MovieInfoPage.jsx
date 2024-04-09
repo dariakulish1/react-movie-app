@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { RevolvingDot } from 'react-loader-spinner';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
@@ -6,32 +7,72 @@ import serverImg from '../../images/posterimg.jpg';
 import trailer1 from '../../images/trailer1.png';
 import trailer2 from '../../images/trailer2.png';
 import { CastBox } from '../../components/CastBox';
+import { headers } from '../../utils/headers';
 
 const propTypes = {
   // movieid: PropTypes.number.isRequired,
 };
-export const MovieInfoPage = ({}) => {
+export const MovieInfoPage = () => {
   const { movieid } = useParams();
   const [data, setData] = useState({});
+  const promise = fetch(`movie/${movieid}`);
+  const [iserror, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
   useEffect(() => {
     const options = {
       method: 'GET',
       headers: {
-        accept: 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YzJjNDU3N2FiNWY1MDAwMWRlNTBlMmQzYWVlMDgxMyIsInN1YiI6IjY1ZDQ2OGZiMDlkZGE0MDE4ODU4MDYzNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qg910gKgtA4qwRkHbQFWbYQLbpPR5H7vR9sO3rtqkMM',
+        headers,
       },
     };
 
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieid}?language=en-US`,
-      options,
-    )
+    fetch(`https://api.themoviedb.org/3/movie/${movieid}?language=en-US`, {
+      headers,
+    })
       .then((response) => response.json())
       .then((data) => setData(data))
       .then((response) => console.log('resp:', response))
       .catch((err) => console.error(err));
   }, [movieid]);
+  promise
+    .then((response) => {
+      if (!response.ok) {
+        return Promise.reject(Error('Error'));
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setLoading(false);
+      setData(data.results);
+    })
+    .catch((err) => {
+      setError(false);
+      console.error(err);
+    });
+  if (loading) {
+    return (
+      <div>
+        <RevolvingDot
+          visible
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="revolving-dot-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+        This page is loading...
+      </div>
+    );
+  }
+  if (iserror) {
+    return <div>Sorry, it is error</div>;
+  }
   return (
     <div className="info-box container">
       <div className="info-box__back-case">

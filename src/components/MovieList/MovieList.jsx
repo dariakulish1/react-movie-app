@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './MovieList.scss';
 import { FlexBoxes } from '../FlexBoxes';
+import { headers } from '../../utils/headers';
 
 const propTypes = {
   activebounding: PropTypes.shape.isRequired,
@@ -21,15 +22,12 @@ export const MovieList = ({ activebounding }) => {
     const options = {
       method: 'GET',
       headers: {
-        accept: 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YzJjNDU3N2FiNWY1MDAwMWRlNTBlMmQzYWVlMDgxMyIsInN1YiI6IjY1ZDQ2OGZiMDlkZGE0MDE4ODU4MDYzNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qg910gKgtA4qwRkHbQFWbYQLbpPR5H7vR9sO3rtqkMM',
+        headers,
       },
     };
-    fetch(
-      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
-      options,
-    )
+    fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', {
+      headers,
+    })
       .then((response) => response.json())
       .then((data) => setData(data.results))
       .catch((err) => console.error(err));

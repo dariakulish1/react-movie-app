@@ -1,7 +1,9 @@
+import { ColorRing } from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import './HomePage.scss';
 import { MovieList } from '../../components/MovieList';
+import { headers } from '../../utils/headers';
 
 const propTypes = {
   id: PropTypes.number.isRequired,
@@ -17,45 +19,60 @@ const propTypes = {
 export const HomePage = ({ id }) => {
   const promise = fetch(`movie/${id}`);
   const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [iserror, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
   useEffect(() => {
     const options = {
       method: 'GET',
       headers: {
-        accept: 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YzJjNDU3N2FiNWY1MDAwMWRlNTBlMmQzYWVlMDgxMyIsInN1YiI6IjY1ZDQ2OGZiMDlkZGE0MDE4ODU4MDYzNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qg910gKgtA4qwRkHbQFWbYQLbpPR5H7vR9sO3rtqkMM',
+        headers,
       },
     };
-    fetch(
-      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
-      options,
-    )
+    fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', {
+      headers,
+    })
       .then((response) => response.json())
       .then((data) => setData(data.results))
       .catch((err) => console.error(err));
   }, []);
   promise
     .then((response) => {
-      if (response.ok || response.status === 200) {
-        return response.json();
+      if (!response.ok) {
+        return Promise.reject(Error('Error'));
       }
-      setError(true);
-      setLoading(false);
-      response.json();
-      return Promise.reject(Error('Error'));
+      return response.json();
     })
     .then((data) => {
-      setData(data.results);
       setLoading(false);
+      setData(data.results);
     })
-    .catch((err) => console.error(err));
-  if (error) {
-    return <div>Sorry, it is error</div>;
-  }
+    .catch((err) => {
+      setError(false);
+      console.error(err);
+    });
   if (loading) {
-    return <div>This page is loading...</div>;
+    return (
+      <div>
+        <ColorRing
+          visible
+          height="80"
+          width="80"
+          ariaLabel="color-ring-loading"
+          wrapperStyle={{}}
+          wrapperClass="color-ring-wrapper"
+          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        />
+        This page is loading...
+      </div>
+    );
+  }
+  if (iserror) {
+    return <div>Sorry, it is error</div>;
   }
   return (
     <section className="films-list container">
