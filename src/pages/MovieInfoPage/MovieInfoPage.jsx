@@ -15,8 +15,7 @@ const propTypes = {
 export const MovieInfoPage = () => {
   const { movieid } = useParams();
   const [data, setData] = useState({});
-  const promise = fetch(`movie/${movieid}`);
-  const [iserror, setError] = useState(false);
+  const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -30,30 +29,39 @@ export const MovieInfoPage = () => {
         headers,
       },
     };
-
-    fetch(`https://api.themoviedb.org/3/movie/${movieid}?language=en-US`, {
-      headers,
-    })
-      .then((response) => response.json())
+    fetch(`movie/${movieid}`, options)
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject(Error('Error'));
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLoading(false);
+        setData(data.results);
+      })
+      .catch((err) => {
+        setError(true);
+        console.error('err1: ', err);
+      });
+    fetch(
+      `https://api.themoviedb.org/3/movie/${movieid}?language=en-US`,
+      options,
+    )
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject(Error('Error'));
+        }
+        return response.json();
+      })
       .then((data) => setData(data))
       .then((response) => console.log('resp:', response))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setError(true);
+        console.error('err2: ', err);
+      });
   }, [movieid]);
-  promise
-    .then((response) => {
-      if (!response.ok) {
-        return Promise.reject(Error('Error'));
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setLoading(false);
-      setData(data.results);
-    })
-    .catch((err) => {
-      setError(false);
-      console.error(err);
-    });
+
   if (loading) {
     return (
       <div>
@@ -70,7 +78,7 @@ export const MovieInfoPage = () => {
       </div>
     );
   }
-  if (iserror) {
+  if (isError) {
     return <div>Sorry, it is error</div>;
   }
   return (

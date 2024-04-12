@@ -35,10 +35,20 @@ export const HomePage = ({ id }) => {
     };
     fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', {
       headers,
+      options,
     })
-      .then((response) => response.json())
-      .then((data) => setData(data.results))
-      .catch((err) => console.error(err));
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject(Error('Error'));
+        }
+        return response.json();
+      })
+      .then((data) => setData(data))
+      .then((response) => console.log('resp:', response))
+      .catch((err) => {
+        setError(true);
+        console.error(err);
+      });
   }, []);
   promise
     .then((response) => {
@@ -49,7 +59,7 @@ export const HomePage = ({ id }) => {
     })
     .then((data) => {
       setLoading(false);
-      setData(data.results);
+      setData(data);
     })
     .catch((err) => {
       setError(false);
