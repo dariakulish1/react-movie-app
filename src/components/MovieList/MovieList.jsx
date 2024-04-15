@@ -21,11 +21,10 @@ export const MovieList = ({ activebounding }) => {
   useEffect(() => {
     const options = {
       method: 'GET',
-      headers: {
-        headers,
-      },
+      headers,
     };
     fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', {
+      options,
       headers,
     })
       .then((response) => response.json())

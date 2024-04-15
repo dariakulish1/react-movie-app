@@ -3,11 +3,11 @@ import { RevolvingDot } from 'react-loader-spinner';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
-import serverImg from '../../images/posterimg.jpg';
 import trailer1 from '../../images/trailer1.png';
 import trailer2 from '../../images/trailer2.png';
 import { CastBox } from '../../components/CastBox';
 import { headers } from '../../utils/headers';
+import { Spinner } from '../../components/Spinner/Spinner';
 
 const propTypes = {
   // movieid: PropTypes.number.isRequired,
@@ -25,25 +25,27 @@ export const MovieInfoPage = () => {
   useEffect(() => {
     const options = {
       method: 'GET',
-      headers: {
-        headers,
-      },
+      headers,
     };
-    fetch(`movie/${movieid}`, options)
-      .then((response) => {
-        if (!response.ok) {
-          return Promise.reject(Error('Error'));
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setLoading(false);
-        setData(data.results);
-      })
-      .catch((err) => {
-        setError(true);
-        console.error('err1: ', err);
-      });
+    // fetch(
+    //   `https://api.themoviedb.org/3/movie/${movieid}?language=en-US`,
+    //   options,
+    // )
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       return Promise.reject(Error('Error'));
+    //     }
+    //     console.log('responsejs', response.json());
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     setLoading(false);
+    //     setData(data.results);
+    //   })
+    //   .catch((err) => {
+    //     setError(true);
+    //     console.error('err1: ', err);
+    //   });
     fetch(
       `https://api.themoviedb.org/3/movie/${movieid}?language=en-US`,
       options,
@@ -65,21 +67,13 @@ export const MovieInfoPage = () => {
   if (loading) {
     return (
       <div>
-        <RevolvingDot
-          visible
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="revolving-dot-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
+        <Spinner />
         This page is loading...
       </div>
     );
   }
   if (isError) {
-    return <div>Sorry, it is error</div>;
+    return <div className="container">Sorry, it is error</div>;
   }
   return (
     <div className="info-box container">

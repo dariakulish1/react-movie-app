@@ -8,7 +8,7 @@ import { headers } from '../../utils/headers';
 const propTypes = {
   id: PropTypes.number.isRequired,
   elements: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
     title: PropTypes.string.isRequired,
     original_title: PropTypes.string.isRequired,
     vote_average: PropTypes.number.isRequired,
@@ -29,9 +29,7 @@ export const HomePage = ({ id }) => {
   useEffect(() => {
     const options = {
       method: 'GET',
-      headers: {
-        headers,
-      },
+      headers,
     };
     fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', {
       headers,
@@ -69,6 +67,7 @@ export const HomePage = ({ id }) => {
     return (
       <div>
         <ColorRing
+          className="container"
           visible
           height="80"
           width="80"

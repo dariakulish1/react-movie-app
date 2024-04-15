@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import actorphoto from '../../images/actorphoto.png';
 import unnamed from '../../images/unnamed.png';
 import { headers } from '../../utils/headers';
+import { Spinner } from '../Spinner/Spinner';
 
 export const CastBox = () => {
   const { movieid } = useParams();
@@ -52,15 +53,7 @@ export const CastBox = () => {
   if (loading) {
     return (
       <div>
-        <ThreeCircles
-          visible
-          height="100"
-          width="100"
-          color="#4fa94d"
-          ariaLabel="three-circles-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
+        <Spinner />
       </div>
     );
   }
