@@ -1,8 +1,6 @@
 import './CastBox.scss';
-import { ThreeCircles } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import actorphoto from '../../images/actorphoto.png';
 import unnamed from '../../images/unnamed.png';
 import { headers } from '../../utils/headers';
 import { Spinner } from '../Spinner/Spinner';
@@ -21,20 +19,18 @@ export const CastBox = () => {
   useEffect(() => {
     const options = {
       method: 'GET',
-      headers: {
-        headers,
-      },
+      headers,
     };
 
     fetch(
       `https://api.themoviedb.org/3/movie/${movieid}/credits?language=en-US`,
-      { headers },
+      { options },
     )
       .then((response) => response.json())
       .then((data) => setData(data.cast))
-      .then((response) => console.log(response))
-      .catch((err) => console.error(err));
-  }, []);
+      .then((response) => response)
+      .catch((err) => err);
+  }, [movieid]);
   promise
     .then((response) => {
       if (!response.ok) {
@@ -48,7 +44,6 @@ export const CastBox = () => {
     })
     .catch((err) => {
       setError(false);
-      console.error(err);
     });
   if (loading) {
     return (

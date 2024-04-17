@@ -1,9 +1,9 @@
-import { ColorRing } from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import './HomePage.scss';
 import { MovieList } from '../../components/MovieList';
 import { headers } from '../../utils/headers';
+import { Spinner } from '../../components/Spinner/Spinner';
 
 const propTypes = {
   id: PropTypes.number.isRequired,
@@ -42,12 +42,11 @@ export const HomePage = ({ id }) => {
         return response.json();
       })
       .then((data) => setData(data))
-      .then((response) => console.log('resp:', response))
+      .then((response) => response)
       .catch((err) => {
         setError(true);
-        console.error(err);
       });
-  }, []);
+  }, [data]);
   promise
     .then((response) => {
       if (!response.ok) {
@@ -61,21 +60,11 @@ export const HomePage = ({ id }) => {
     })
     .catch((err) => {
       setError(false);
-      console.error(err);
     });
   if (loading) {
     return (
       <div>
-        <ColorRing
-          className="container"
-          visible
-          height="80"
-          width="80"
-          ariaLabel="color-ring-loading"
-          wrapperStyle={{}}
-          wrapperClass="color-ring-wrapper"
-          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        />
+        <Spinner />
         This page is loading...
       </div>
     );

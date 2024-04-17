@@ -7,12 +7,10 @@ import solidStar from '../../images/star-solid.svg';
 const propTypes = {
   movieid: PropTypes.number.isRequired,
   activebounding: PropTypes.shape.isRequired,
-  elements: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    original_title: PropTypes.string.isRequired,
-    vote_average: PropTypes.number.isRequired,
-    poster_path: PropTypes.shape.isRequired,
-  }).isRequired,
+  title: PropTypes.string.isRequired,
+  original_title: PropTypes.string.isRequired,
+  vote_average: PropTypes.number.isRequired,
+  poster_path: PropTypes.shape.isRequired,
 };
 export const FlexBoxes = ({
   title,

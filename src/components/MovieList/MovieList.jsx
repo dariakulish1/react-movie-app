@@ -29,8 +29,8 @@ export const MovieList = ({ activebounding }) => {
     })
       .then((response) => response.json())
       .then((data) => setData(data.results))
-      .catch((err) => console.error(err));
-  }, []);
+      .catch((err) => err);
+  }, [movieid]);
   return (
     <div className="div-list container">
       {data.map(({ id, title, original_title, vote_average, poster_path }) => {

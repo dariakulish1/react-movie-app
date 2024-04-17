@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { RevolvingDot } from 'react-loader-spinner';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
@@ -10,7 +9,13 @@ import { headers } from '../../utils/headers';
 import { Spinner } from '../../components/Spinner/Spinner';
 
 const propTypes = {
-  // movieid: PropTypes.number.isRequired,
+  elements: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string.isRequired,
+    original_title: PropTypes.string.isRequired,
+    vote_average: PropTypes.number.isRequired,
+    poster_path: PropTypes.shape.isRequired,
+  }).isRequired,
 };
 export const MovieInfoPage = () => {
   const { movieid } = useParams();
@@ -27,25 +32,6 @@ export const MovieInfoPage = () => {
       method: 'GET',
       headers,
     };
-    // fetch(
-    //   `https://api.themoviedb.org/3/movie/${movieid}?language=en-US`,
-    //   options,
-    // )
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       return Promise.reject(Error('Error'));
-    //     }
-    //     console.log('responsejs', response.json());
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     setLoading(false);
-    //     setData(data.results);
-    //   })
-    //   .catch((err) => {
-    //     setError(true);
-    //     console.error('err1: ', err);
-    //   });
     fetch(
       `https://api.themoviedb.org/3/movie/${movieid}?language=en-US`,
       options,
@@ -57,10 +43,9 @@ export const MovieInfoPage = () => {
         return response.json();
       })
       .then((data) => setData(data))
-      .then((response) => console.log('resp:', response))
+      .then((response) => response)
       .catch((err) => {
         setError(true);
-        console.error('err2: ', err);
       });
   }, [movieid]);
 
