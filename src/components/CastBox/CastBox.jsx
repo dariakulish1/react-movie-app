@@ -24,7 +24,7 @@ export const CastBox = () => {
 
     fetch(
       `https://api.themoviedb.org/3/movie/${movieid}/credits?language=en-US`,
-      { options },
+      options,
     )
       .then((response) => response.json())
       .then((data) => setData(data.cast))
