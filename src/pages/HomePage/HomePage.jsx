@@ -7,6 +7,7 @@ import { Spinner } from '../../components/Spinner/Spinner';
 
 const propTypes = {
   id: PropTypes.number.isRequired,
+  // onFindClick: PropTypes.function.isRequired,
   elements: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string.isRequired,
@@ -17,24 +18,35 @@ const propTypes = {
 };
 
 export const HomePage = ({ id }) => {
-  const promise = fetch(`movie/${id}`);
   const [data, setData] = useState([]);
   const [iserror, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [inputText, setInputText] = useState('');
+  const [movie, setMovie] = useState('');
+
+  const handleInputChange = (event) => {
+    setInputText(event.target.value);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 3000);
   }, []);
+
   useEffect(() => {
     const options = {
       method: 'GET',
       headers,
     };
-    fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', {
-      headers,
-      options,
-    })
+    const promise = fetch(
+      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+      {
+        headers,
+        options,
+      },
+    );
+    promise
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(Error('Error'));
@@ -47,20 +59,26 @@ export const HomePage = ({ id }) => {
         setError(true);
       });
   }, [data]);
-  promise
-    .then((response) => {
-      if (!response.ok) {
-        return Promise.reject(Error('Error'));
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setLoading(false);
-      setData(data);
-    })
-    .catch((err) => {
-      setError(false);
-    });
+
+  const handleMovieChange = (newMovie) => {
+    setMovie(newMovie);
+    const options = {
+      method: 'GET',
+      headers,
+    };
+    fetch(
+      `https://api.themoviedb.org/3/search/movie?query=${newMovie}&include_adult=false&language=en-US&page=1`,
+      options,
+    )
+      .then((response) => response.json())
+      .then((response) => console.log(response))
+      .catch((err) => console.error(err));
+  };
+
+  const handleFindClick = () => {
+    handleMovieChange(inputText);
+  };
+
   if (loading) {
     return (
       <div>
@@ -74,11 +92,23 @@ export const HomePage = ({ id }) => {
   }
   return (
     <section className="films-list container">
-      <input
-        className="films-list__input"
-        type="text"
-        placeholder="Write film name..."
-      />
+      <div className="films-list__search-bar">
+        <input
+          className="films-list__input"
+          type="text"
+          placeholder="Write film name..."
+          value={inputText}
+          onChange={handleInputChange}
+        />
+        <button
+          className="films-list__find_btn"
+          type="button"
+          onClick={handleFindClick}
+        >
+          Find
+        </button>
+      </div>
+
       <MovieList />
     </section>
   );

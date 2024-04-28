@@ -8,51 +8,47 @@ import { Spinner } from '../Spinner/Spinner';
 export const CastBox = () => {
   const { movieid } = useParams();
   const [data, setData] = useState([]);
-  const promise = fetch(`movie/${movieid}`);
-  const [iserror, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isError, setError] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 1500);
   }, []);
+
   useEffect(() => {
     const options = {
       method: 'GET',
       headers,
     };
-
-    fetch(
+    const promise = fetch(
       `https://api.themoviedb.org/3/movie/${movieid}/credits?language=en-US`,
       options,
-    )
-      .then((response) => response.json())
-      .then((data) => setData(data.cast))
-      .then((response) => response)
-      .catch((err) => err);
+    );
+    promise
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject(Error('Error'));
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLoading(false);
+        setData(data.cast);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(true);
+      });
   }, [movieid]);
-  promise
-    .then((response) => {
-      if (!response.ok) {
-        return Promise.reject(Error('Error'));
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setLoading(false);
-      setData(data.results);
-    })
-    .catch((err) => {
-      setError(false);
-    });
-  if (loading) {
+  if (isLoading) {
     return (
       <div>
         <Spinner />
       </div>
     );
   }
-  if (iserror) {
+  if (isError) {
     return <div>Sorry, it is error</div>;
   }
   return (
