@@ -19,12 +19,15 @@ const propTypes = {
 
 export const HomePage = ({ id }) => {
   const [data, setData] = useState([]);
+  const [findMovie, setFindMovie] = useState([]);
+  const [isFound, setFound] = useState(false);
   const [iserror, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [inputText, setInputText] = useState('');
   const [movie, setMovie] = useState('');
 
   const handleInputChange = (event) => {
+    setFound(!!event.target.value);
     setInputText(event.target.value);
   };
 
@@ -53,12 +56,12 @@ export const HomePage = ({ id }) => {
         }
         return response.json();
       })
-      .then((data) => setData(data))
+      .then((data) => setData(data.results))
       .then((response) => response)
       .catch((err) => {
         setError(true);
       });
-  }, [data]);
+  }, []);
 
   const handleMovieChange = (newMovie) => {
     setMovie(newMovie);
@@ -71,12 +74,10 @@ export const HomePage = ({ id }) => {
       options,
     )
       .then((response) => response.json())
-      .then((response) => console.log(response))
+      .then((response) => {
+        setFindMovie(response.results);
+      })
       .catch((err) => console.error(err));
-  };
-
-  const handleFindClick = () => {
-    handleMovieChange(inputText);
   };
 
   if (loading) {
@@ -103,13 +104,13 @@ export const HomePage = ({ id }) => {
         <button
           className="films-list__find_btn"
           type="button"
-          onClick={handleFindClick}
+          onClick={handleMovieChange}
         >
           Find
         </button>
       </div>
 
-      <MovieList />
+      <MovieList movies={data} />
     </section>
   );
 };

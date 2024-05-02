@@ -87,6 +87,7 @@
     &__film-description {
         padding: 10px 0px 10px 0px;
         height: 150px;
+        overflow: auto;
     }
     &__description-text {
         font-family: "Inter", sans-serif;

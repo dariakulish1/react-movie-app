@@ -5,6 +5,10 @@
     margin: 10px;
     border-radius: 16px;
     box-shadow: 1px 1px 1px 1px rgba(38, 38, 38, 0.075);
+    // white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
     &__server-img {
         width: 293px;
         height: 400px;
