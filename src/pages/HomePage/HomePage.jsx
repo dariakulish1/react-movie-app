@@ -30,6 +30,7 @@ export const HomePage = ({ id }) => {
     setFound(!!event.target.value);
     setInputText(event.target.value);
   };
+  console.log('findMovie', findMovie);
 
   useEffect(() => {
     setTimeout(() => {
@@ -79,7 +80,7 @@ export const HomePage = ({ id }) => {
       })
       .catch((err) => console.error(err));
   };
-
+  console.log('isFound', isFound);
   if (loading) {
     return (
       <div>
@@ -88,9 +89,11 @@ export const HomePage = ({ id }) => {
       </div>
     );
   }
+
   if (iserror) {
     return <div>Sorry, it is error</div>;
   }
+
   return (
     <section className="films-list container">
       <div className="films-list__search-bar">
@@ -104,13 +107,13 @@ export const HomePage = ({ id }) => {
         <button
           className="films-list__find_btn"
           type="button"
-          onClick={handleMovieChange}
+          onClick={() => handleMovieChange(inputText)}
         >
           Find
         </button>
       </div>
 
-      <MovieList movies={data} />
+      <MovieList movies={isFound ? findMovie : data} />
     </section>
   );
 };
