@@ -24,11 +24,18 @@ export const HomePage = ({ id }) => {
   const [iserror, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [inputText, setInputText] = useState('');
-  const [movie, setMovie] = useState('');
+
+  const notFound = inputText.length > 0 && findMovie.length == 0;
 
   const handleInputChange = (event) => {
-    setFound(!!event.target.value);
-    setInputText(event.target.value);
+    const { value } = event.target;
+    if (value) {
+      setFound(true);
+      handleMovieChange(value);
+    } else {
+      setFound(false);
+    }
+    setInputText(value);
   };
   console.log('findMovie', findMovie);
 
@@ -64,14 +71,13 @@ export const HomePage = ({ id }) => {
       });
   }, []);
 
-  const handleMovieChange = (newMovie) => {
-    setMovie(newMovie);
+  const handleMovieChange = (inputText) => {
     const options = {
       method: 'GET',
       headers,
     };
     fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${newMovie}&include_adult=false&language=en-US&page=1`,
+      `https://api.themoviedb.org/3/search/movie?query=${inputText}&include_adult=false&language=en-US&page=1`,
       options,
     )
       .then((response) => response.json())
@@ -80,7 +86,9 @@ export const HomePage = ({ id }) => {
       })
       .catch((err) => console.error(err));
   };
+
   console.log('isFound', isFound);
+
   if (loading) {
     return (
       <div>
@@ -93,7 +101,6 @@ export const HomePage = ({ id }) => {
   if (iserror) {
     return <div>Sorry, it is error</div>;
   }
-
   return (
     <section className="films-list container">
       <div className="films-list__search-bar">
@@ -104,16 +111,13 @@ export const HomePage = ({ id }) => {
           value={inputText}
           onChange={handleInputChange}
         />
-        <button
-          className="films-list__find_btn"
-          type="button"
-          onClick={() => handleMovieChange(inputText)}
-        >
-          Find
-        </button>
       </div>
 
-      <MovieList movies={isFound ? findMovie : data} />
+      {notFound ? (
+        <div>Movie is not found</div>
+      ) : (
+        <MovieList movies={isFound ? findMovie : data} />
+      )}
     </section>
   );
 };
