@@ -32,7 +32,6 @@
     }
     &__rating-num {
         color: white;
-        font-family: "Inter", sans-serif;
         text-align: center;
         font-size: 16px;
         font-weight: 700;
@@ -53,9 +52,6 @@
     &__bounding {
         width: 25px;
         padding: 10px;
-        &:hover {
-            cursor: pointer;
-        }
     }
     &__movie-titles {
         width: 285px;
@@ -65,14 +61,12 @@
         margin-left: 10px;
     }
     &__main-title {
-        font-family: "Inter", sans-serif;
         font-weight: 700;
         font-size: 20px;
         padding: 3px;
     }
     &__original-title, &__movie-genres {
         color: #808080;
-        font-family: "Inter", sans-serif;
         font-weight: 400;
         font-size: 15px;
         padding: 3px;

@@ -3,17 +3,17 @@ import { useEffect, useState } from 'react';
 import './HomePage.scss';
 import { MovieList } from '../../components/MovieList';
 import { headers } from '../../utils/headers';
-import { Spinner } from '../../components/Spinner/Spinner';
+import { Spinner } from '../../components/Spinner';
+import { getUrl } from '../../utils/url';
 
 const propTypes = {
   id: PropTypes.number.isRequired,
-  // onFindClick: PropTypes.function.isRequired,
   elements: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string.isRequired,
     original_title: PropTypes.string.isRequired,
     vote_average: PropTypes.number.isRequired,
-    poster_path: PropTypes.shape.isRequired,
+    poster_path: PropTypes.element.isRequired,
   }).isRequired,
 };
 
@@ -21,11 +21,11 @@ export const HomePage = ({ id }) => {
   const [data, setData] = useState([]);
   const [findMovie, setFindMovie] = useState([]);
   const [isFound, setFound] = useState(false);
-  const [iserror, setError] = useState(false);
+  const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [inputText, setInputText] = useState('');
 
-  const notFound = inputText.length > 0 && findMovie.length == 0;
+  const notFound = inputText.length > 0 && findMovie.length === 0;
 
   const handleInputChange = (event) => {
     const { value } = event.target;
@@ -37,7 +37,6 @@ export const HomePage = ({ id }) => {
     }
     setInputText(value);
   };
-  console.log('findMovie', findMovie);
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,13 +49,10 @@ export const HomePage = ({ id }) => {
       method: 'GET',
       headers,
     };
-    const promise = fetch(
-      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
-      {
-        headers,
-        options,
-      },
-    );
+    const promise = fetch(getUrl('popular'), {
+      headers,
+      options,
+    });
     promise
       .then((response) => {
         if (!response.ok) {
@@ -64,7 +60,10 @@ export const HomePage = ({ id }) => {
         }
         return response.json();
       })
-      .then((data) => setData(data.results))
+      .then((data) => {
+        setData(data.results);
+        setLoading(false);
+      })
       .then((response) => response)
       .catch((err) => {
         setError(true);
@@ -84,10 +83,8 @@ export const HomePage = ({ id }) => {
       .then((response) => {
         setFindMovie(response.results);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {});
   };
-
-  console.log('isFound', isFound);
 
   if (loading) {
     return (
@@ -98,7 +95,7 @@ export const HomePage = ({ id }) => {
     );
   }
 
-  if (iserror) {
+  if (isError) {
     return <div>Sorry, it is error</div>;
   }
   return (
@@ -114,7 +111,7 @@ export const HomePage = ({ id }) => {
       </div>
 
       {notFound ? (
-        <div>Movie is not found</div>
+        <div className="container">Movie is not found</div>
       ) : (
         <MovieList movies={isFound ? findMovie : data} />
       )}

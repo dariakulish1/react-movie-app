@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import unnamed from '../../images/unnamed.png';
 import { headers } from '../../utils/headers';
-import { Spinner } from '../Spinner/Spinner';
+import { Spinner } from '../Spinner';
+import { getUrl } from '../../utils/url';
 
 export const CastBox = () => {
   const { movieid } = useParams();
@@ -21,11 +22,7 @@ export const CastBox = () => {
       method: 'GET',
       headers,
     };
-    const promise = fetch(
-      `https://api.themoviedb.org/3/movie/${movieid}/credits?language=en-US`,
-      options,
-    );
-    promise
+    fetch(getUrl(`${movieid}/credits`), options)
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(Error('Error'));
@@ -53,21 +50,21 @@ export const CastBox = () => {
   }
   return (
     <div className="info-cast-box">
-      {data.map(({ character, name, profile_path }) => {
+      {data.map(({ character, name, profile_path: profilePath }) => {
         return (
           <div className="info-cast-box__all-cast-info">
             <img
               className="info-cast-box__actor-photo"
               src={
-                profile_path
-                  ? `https://image.tmdb.org/t/p/w185/${profile_path}`
+                profilePath
+                  ? `https://image.tmdb.org/t/p/w185/${profilePath}`
                   : unnamed
               }
               alt="actor"
             />
             <div className="info-cast-box__info-about-actor">
-              <p className="info-cast-box__actors-name">{name}</p>
-              <p className="info-cast-box__actors-role">{character}</p>
+              <p className="info-cast-box__actors-name inter">{name}</p>
+              <p className="info-cast-box__actors-role inter">{character}</p>
             </div>
           </div>
         );

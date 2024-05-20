@@ -6,7 +6,8 @@ import trailer1 from '../../images/trailer1.png';
 import trailer2 from '../../images/trailer2.png';
 import { CastBox } from '../../components/CastBox';
 import { headers } from '../../utils/headers';
-import { Spinner } from '../../components/Spinner/Spinner';
+import { Spinner } from '../../components/Spinner';
+import { getUrl } from '../../utils/url';
 
 const propTypes = {
   elements: PropTypes.shape({
@@ -14,7 +15,7 @@ const propTypes = {
     title: PropTypes.string.isRequired,
     original_title: PropTypes.string.isRequired,
     vote_average: PropTypes.number.isRequired,
-    poster_path: PropTypes.shape.isRequired,
+    poster_path: PropTypes.element.isRequired,
   }).isRequired,
 };
 export const MovieInfoPage = () => {
@@ -32,17 +33,17 @@ export const MovieInfoPage = () => {
       method: 'GET',
       headers,
     };
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieid}?language=en-US`,
-      options,
-    )
+    fetch(getUrl(`${movieid}`), options)
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(Error('Error'));
         }
         return response.json();
       })
-      .then((data) => setData(data))
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
       .then((response) => response)
       .catch((err) => {
         setError(true);
@@ -64,7 +65,7 @@ export const MovieInfoPage = () => {
     <div className="info-box container">
       <div className="info-box__back-case">
         <Link
-          className="info-box__back-botton"
+          className="info-box__back-botton inter"
           to="#"
           onClick={() => window.history.back()}
         >
@@ -80,25 +81,25 @@ export const MovieInfoPage = () => {
           />
         </div>
         <div className="info-box__detailed-info">
-          <p className="info-box__server-movie-name">{data.title}</p>
-          <p className="info-box__small-title">{data.original_title}</p>
-          <p className="info-box__server-movie-rating">
+          <p className="info-box__server-movie-name inter">{data.title}</p>
+          <p className="info-box__small-title inter">{data.original_title}</p>
+          <p className="info-box__server-movie-rating inter">
             Rating:{' '}
             <span className="info-box__span-num">
               {data.vote_average ? data.vote_average.toFixed(1) : 0}
             </span>
           </p>
-          <p className="info-box__server-data-release">
+          <p className="info-box__server-data-release inter">
             Release data:
             <span className="info-box__span-data">{data.release_date}</span>
           </p>
-          <p className="info-box__server-genres-info">
+          <p className="info-box__server-genres-info inter">
             Genre:
             <span className="info-box__span-genres">
               Genre 1, genre 2, genre 3
             </span>
           </p>
-          <p className="info-box__server-runtime-info">
+          <p className="info-box__server-runtime-info inter">
             Runtime:
             <span className="info-box__span-runtime">
               {data.runtime} minutes
@@ -107,26 +108,32 @@ export const MovieInfoPage = () => {
           <div className="info-box__buttons-box">
             <hr />
             <div className="info-box__two-buttons-container">
-              <button type="button" className="info-box__button-to-watch">
+              <button
+                type="button"
+                className="info-box__button-to-watch cursor inter"
+              >
                 &#9658; Watch movie
               </button>
-              <button type="button" className="info-box__button-to-add-to-fav">
+              <button
+                type="button"
+                className="info-box__button-to-add-to-fav cursor inter"
+              >
                 Add to favorite
               </button>
             </div>
           </div>
-          <div className="info-box__film-description">
+          <div className="info-box__film-description inter">
             <hr />
             <p className="info-box__description-text">{data.overview}</p>
           </div>
         </div>
       </div>
       <hr />
-      <p className="info-box__trailers-title">Trailers</p>
+      <p className="info-box__trailers-title inter">Trailers</p>
       <div className="info-box__trailer-video">
         <div className="info-box__video-with-title">
           <img
-            className="info-box__server-trailer-video"
+            className="info-box__server-trailer-video cursor"
             src={trailer1}
             alt="trailer-1"
           />
@@ -134,15 +141,17 @@ export const MovieInfoPage = () => {
         </div>
         <div className="info-box__video-with-title">
           <img
-            className="info-box__server-trailer-video"
+            className="info-box__server-trailer-video cursor"
             src={trailer2}
             alt="trailer-2"
           />
-          <p className="info-box__official-trailer-title">Official trailer 2</p>
+          <p className="info-box__official-trailer-title inter">
+            Official trailer 2
+          </p>
         </div>
       </div>
       <hr />
-      <p className="info-box__cast-title">Cast</p>
+      <p className="info-box__cast-title inter">Cast</p>
       <div className="info-box__cast-case">
         <CastBox />
       </div>

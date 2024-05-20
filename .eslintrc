@@ -41,7 +41,6 @@
     "no-redeclare": 2,
     "no-shadow": "off",
     "no-undef": "warn",
-    "camelcase": ["error", {"allow": ["original_title","vote_average","poster_path","release_date","profile_path"]}],
     "no-unused-vars": [
       "warn",
       {
