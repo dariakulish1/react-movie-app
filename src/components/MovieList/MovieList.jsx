@@ -3,20 +3,21 @@ import './MovieList.scss';
 import { FlexBoxes } from '../FlexBoxes';
 
 const propTypes = {
-  activebounding: PropTypes.element.isRequired,
-  movies: PropTypes.element.isRequired,
-  elements: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    original_title: PropTypes.string.isRequired,
-    vote_average: PropTypes.number.isRequired,
-    poster_path: PropTypes.shape.isRequired,
-  }).isRequired,
+  activebounding: PropTypes.node.isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      original_title: PropTypes.string.isRequired,
+      vote_average: PropTypes.number.isRequired,
+      poster_path: PropTypes.node.isRequired,
+    }),
+  ).isRequired,
 };
 export const MovieList = ({ activebounding, movies }) => {
   return (
     <div className="div-list container">
-      {movies.map(
+      {movies?.map(
         ({
           id,
           title,

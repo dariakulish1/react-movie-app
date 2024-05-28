@@ -15,7 +15,7 @@ const propTypes = {
     title: PropTypes.string.isRequired,
     original_title: PropTypes.string.isRequired,
     vote_average: PropTypes.number.isRequired,
-    poster_path: PropTypes.element.isRequired,
+    poster_path: PropTypes.node.isRequired,
   }).isRequired,
 };
 export const MovieInfoPage = () => {
@@ -33,7 +33,7 @@ export const MovieInfoPage = () => {
       method: 'GET',
       headers,
     };
-    fetch(getUrl(`${movieid}`), options)
+    fetch(getUrl(`movie/${movieid}?`), options)
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(Error('Error'));

@@ -4,7 +4,7 @@ import { MovieList } from '../../components/MovieList';
 import farstar from '../../images/far star.svg';
 
 const propTypes = {
-  activebounding: PropTypes.element.isRequired,
+  activebounding: PropTypes.node.isRequired,
 };
 
 export const FavoritesPage = ({ activebounding }) => {

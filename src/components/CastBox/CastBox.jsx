@@ -22,7 +22,7 @@ export const CastBox = () => {
       method: 'GET',
       headers,
     };
-    fetch(getUrl(`${movieid}/credits`), options)
+    fetch(getUrl(`movie/${movieid}/credits?`), options)
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(Error('Error'));

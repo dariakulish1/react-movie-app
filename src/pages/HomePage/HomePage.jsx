@@ -13,7 +13,7 @@ const propTypes = {
     title: PropTypes.string.isRequired,
     original_title: PropTypes.string.isRequired,
     vote_average: PropTypes.number.isRequired,
-    poster_path: PropTypes.element.isRequired,
+    poster_path: PropTypes.node.isRequired,
   }).isRequired,
 };
 
@@ -49,7 +49,7 @@ export const HomePage = ({ id }) => {
       method: 'GET',
       headers,
     };
-    const promise = fetch(getUrl('popular'), {
+    const promise = fetch(getUrl('movie/popular?'), {
       headers,
       options,
     });
@@ -76,7 +76,7 @@ export const HomePage = ({ id }) => {
       headers,
     };
     fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${inputText}&include_adult=false&language=en-US&page=1`,
+      getUrl(`search/movie?query=${inputText}&include_adult=false&`),
       options,
     )
       .then((response) => response.json())

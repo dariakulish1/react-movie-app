@@ -6,11 +6,11 @@ import solidStar from '../../images/star-solid.svg';
 
 const propTypes = {
   movieid: PropTypes.number.isRequired,
-  activebounding: PropTypes.element.isRequired,
+  activebounding: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   original_title: PropTypes.string.isRequired,
   vote_average: PropTypes.number.isRequired,
-  poster_path: PropTypes.element.isRequired,
+  poster_path: PropTypes.node.isRequired,
 };
 export const FlexBoxes = ({
   title,
