@@ -5,6 +5,12 @@ import bounding from '../../images/bounding-24.svg';
 import solidStar from '../../images/star-solid.svg';
 
 const propTypes = {
+  genres: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
+  ).isRequired,
   movieid: PropTypes.number.isRequired,
   activebounding: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
@@ -13,6 +19,8 @@ const propTypes = {
   poster_path: PropTypes.node.isRequired,
 };
 export const FlexBoxes = ({
+  genres,
+  genresIds,
   title,
   activebounding,
   movieid,
@@ -51,7 +59,7 @@ export const FlexBoxes = ({
       <div className="flex-box__movie-titles">
         <p className="flex-box__main-title inter">{title}</p>
         <p className="flex-box__original-title inter">{originalTitle}</p>
-        <p className="flex-box__movie-genres inter">Genre 1</p>
+        <p className="flex-box__movie-genres inter">{genres.name}</p>
         <div className="flex-box__age-limit">18+</div>
         <div className="flex-box__quality">Full HD</div>
         <div className="flex-box__rate-num">{`IMDb ${voteAverage.toFixed(1)}`}</div>

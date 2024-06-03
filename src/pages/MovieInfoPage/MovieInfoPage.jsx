@@ -18,7 +18,7 @@ const propTypes = {
     poster_path: PropTypes.node.isRequired,
   }).isRequired,
 };
-export const MovieInfoPage = () => {
+export const MovieInfoPage = ({}) => {
   const { movieid } = useParams();
   const [data, setData] = useState({});
   const [isError, setError] = useState(false);
@@ -80,7 +80,7 @@ export const MovieInfoPage = () => {
             alt="serverImage"
           />
         </div>
-        <div className="info-box__detailed-info">
+        <div className="info-box__detailed-info inter">
           <p className="info-box__server-movie-name inter">{data.title}</p>
           <p className="info-box__small-title inter">{data.original_title}</p>
           <p className="info-box__server-movie-rating inter">
@@ -95,9 +95,7 @@ export const MovieInfoPage = () => {
           </p>
           <p className="info-box__server-genres-info inter">
             Genre:
-            <span className="info-box__span-genres">
-              Genre 1, genre 2, genre 3
-            </span>
+            <span className="info-box__span-genres">Genres</span>
           </p>
           <p className="info-box__server-runtime-info inter">
             Runtime:

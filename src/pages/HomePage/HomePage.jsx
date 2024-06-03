@@ -8,6 +8,12 @@ import { getUrl } from '../../utils/url';
 
 const propTypes = {
   id: PropTypes.number.isRequired,
+  genres: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
+  ).isRequired,
   elements: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string.isRequired,
@@ -17,7 +23,7 @@ const propTypes = {
   }).isRequired,
 };
 
-export const HomePage = ({ id }) => {
+export const HomePage = ({ id, genres }) => {
   const [data, setData] = useState([]);
   const [findMovie, setFindMovie] = useState([]);
   const [isFound, setFound] = useState(false);
@@ -63,12 +69,13 @@ export const HomePage = ({ id }) => {
       .then((data) => {
         setData(data.results);
         setLoading(false);
+        console.log('genres home ', genres);
       })
       .then((response) => response)
       .catch((err) => {
         setError(true);
       });
-  }, []);
+  }, [genres]);
 
   const handleMovieChange = (inputText) => {
     const options = {
@@ -113,7 +120,7 @@ export const HomePage = ({ id }) => {
       {notFound ? (
         <div className="container">Movie is not found</div>
       ) : (
-        <MovieList movies={isFound ? findMovie : data} />
+        <MovieList movies={isFound ? findMovie : data} genres={genres} />
       )}
     </section>
   );

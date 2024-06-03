@@ -62,9 +62,9 @@ export const CastBox = () => {
               }
               alt="actor"
             />
-            <div className="info-cast-box__info-about-actor">
-              <p className="info-cast-box__actors-name inter">{name}</p>
-              <p className="info-cast-box__actors-role inter">{character}</p>
+            <div className="info-cast-box__info-about-actor inter">
+              <p className="info-cast-box__actors-name">{name}</p>
+              <p className="info-cast-box__actors-role">{character}</p>
             </div>
           </div>
         );

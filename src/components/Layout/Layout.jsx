@@ -1,9 +1,9 @@
-import './NavBar.scss';
+import './Layout.scss';
 import { NavLink, Outlet } from 'react-router-dom';
 import cinefilm from '../../images/far magnifying-glass.svg';
 import { PAGES } from '../../constants';
 
-export const NavBar = () => {
+export const Layout = () => {
   return (
     <div className="nav-div">
       <header className="nav-div__nav-top">
