@@ -17,17 +17,11 @@ const propTypes = {
       original_title: PropTypes.string.isRequired,
       vote_average: PropTypes.number.isRequired,
       poster_path: PropTypes.node.isRequired,
+      genre_ids: PropTypes.arrayOf(PropTypes.number),
     }),
   ).isRequired,
 };
 export const MovieList = ({ activebounding, movies, genres }) => {
-  // movies.forEach((movie) => {
-  //   const { genresIds } = movie;
-  //   genresIds.forEach((genreId) => {
-  //     genresIds = genres.id;
-  //     console.log('genreId Movielist', genreId);
-  //   });
-  // });
   return (
     <div className="div-list container">
       {movies?.map(
@@ -41,10 +35,11 @@ export const MovieList = ({ activebounding, movies, genres }) => {
         }) => {
           movies.forEach((movie) => {
             const { genre_ids: genresIds } = movie;
-            genresIds.forEach((genreId) => {
+            const allGenres = genresIds.map((genreId) => {
               const genre = genres.find((g) => g.id === genreId);
-              console.log('genreId MovieList', genreId, genre?.name);
+              return genre.name;
             });
+            console.log('allGenres(ML) ', allGenres);
           });
           return (
             <FlexBoxes

@@ -18,7 +18,7 @@ const propTypes = {
     poster_path: PropTypes.node.isRequired,
   }).isRequired,
 };
-export const MovieInfoPage = ({}) => {
+export const MovieInfoPage = () => {
   const { movieid } = useParams();
   const [data, setData] = useState({});
   const [isError, setError] = useState(false);

@@ -17,6 +17,7 @@ const propTypes = {
   original_title: PropTypes.string.isRequired,
   vote_average: PropTypes.number.isRequired,
   poster_path: PropTypes.node.isRequired,
+  genresIds: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 export const FlexBoxes = ({
   genres,
@@ -28,6 +29,11 @@ export const FlexBoxes = ({
   vote_average: voteAverage,
   poster_path: posterPath,
 }) => {
+  const allGenres = genresIds.map((genreId) => {
+    const genre = genres.find((g) => g.id === genreId);
+    return genre.name;
+  });
+  console.log('allGenres(FB) ', allGenres);
   return (
     <Link className="flex-box" to={`/movie/${movieid}`}>
       <img
@@ -59,7 +65,7 @@ export const FlexBoxes = ({
       <div className="flex-box__movie-titles">
         <p className="flex-box__main-title inter">{title}</p>
         <p className="flex-box__original-title inter">{originalTitle}</p>
-        <p className="flex-box__movie-genres inter">{genres.name}</p>
+        <p className="flex-box__movie-genres inter">{allGenres}</p>
         <div className="flex-box__age-limit">18+</div>
         <div className="flex-box__quality">Full HD</div>
         <div className="flex-box__rate-num">{`IMDb ${voteAverage.toFixed(1)}`}</div>
