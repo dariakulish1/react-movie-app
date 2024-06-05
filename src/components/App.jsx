@@ -4,6 +4,8 @@ import { HomePage } from '../pages/HomePage';
 import { FavoritesPage } from '../pages/FavoritesPage';
 import { Layout } from './Layout';
 import { MovieInfoPage } from '../pages/MovieInfoPage';
+import { headers } from '../utils/headers';
+import { getUrl } from '../utils/url';
 import './style/App.scss';
 import { PAGES } from '../constants';
 
@@ -13,14 +15,10 @@ export const App = () => {
   useEffect(() => {
     const options = {
       method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YzJjNDU3N2FiNWY1MDAwMWRlNTBlMmQzYWVlMDgxMyIsInN1YiI6IjY1ZDQ2OGZiMDlkZGE0MDE4ODU4MDYzNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qg910gKgtA4qwRkHbQFWbYQLbpPR5H7vR9sO3rtqkMM',
-      },
+      headers,
     };
 
-    fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options)
+    fetch(getUrl('genre/movie/list?'), options)
       .then((response) => response.json())
       .then((data) => {
         setGenres(data?.genres);

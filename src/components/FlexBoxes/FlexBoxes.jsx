@@ -17,8 +17,9 @@ const propTypes = {
   original_title: PropTypes.string.isRequired,
   vote_average: PropTypes.number.isRequired,
   poster_path: PropTypes.node.isRequired,
-  genresIds: PropTypes.arrayOf(PropTypes.number).isRequired,
+  genresIds: PropTypes.arrayOf(PropTypes.shape(PropTypes.number)).isRequired,
 };
+
 export const FlexBoxes = ({
   genres,
   genresIds,
