@@ -30,10 +30,13 @@ export const FlexBoxes = ({
   vote_average: voteAverage,
   poster_path: posterPath,
 }) => {
-  const allGenres = genresIds.map((genreId) => {
-    const genre = genres.find((g) => g.id === genreId);
-    return genre.name;
-  });
+  const allGenres = genresIds
+    .map((genreId) => {
+      const genre = genres.find((g) => g.id === genreId);
+      return genre.name;
+    })
+    .slice(0, 3)
+    .join(' • ');
   console.log('allGenres(FB) ', allGenres);
   return (
     <Link className="flex-box" to={`/movie/${movieid}`}>

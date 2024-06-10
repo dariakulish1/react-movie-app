@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes, { element } from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
@@ -10,7 +10,13 @@ import { Spinner } from '../../components/Spinner';
 import { getUrl } from '../../utils/url';
 
 const propTypes = {
-  elements: PropTypes.shape({
+  genres: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
+  ).isRequired,
+  data: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string.isRequired,
     original_title: PropTypes.string.isRequired,
@@ -18,7 +24,7 @@ const propTypes = {
     poster_path: PropTypes.node.isRequired,
   }).isRequired,
 };
-export const MovieInfoPage = () => {
+export const MovieInfoPage = ({ genres }) => {
   const { movieid } = useParams();
   const [data, setData] = useState({});
   const [isError, setError] = useState(false);
@@ -49,7 +55,7 @@ export const MovieInfoPage = () => {
         setError(true);
       });
   }, [movieid]);
-
+  console.log('datagen(MIP) ', data.genres);
   if (loading) {
     return (
       <div>
@@ -61,6 +67,11 @@ export const MovieInfoPage = () => {
   if (isError) {
     return <div className="container">Sorry, it is error</div>;
   }
+  const allGenres = data.genres.map((genreId) => {
+    const genre = genres.find((g) => g.id === genreId);
+    return genre?.name;
+  });
+  console.log('allGenres(MIP) ', allGenres);
   return (
     <div className="info-box container">
       <div className="info-box__back-case">
@@ -95,7 +106,7 @@ export const MovieInfoPage = () => {
           </p>
           <p className="info-box__server-genres-info inter">
             Genre:
-            <span className="info-box__span-genres">Genres</span>
+            <span className="info-box__span-genres">{allGenres}</span>
           </p>
           <p className="info-box__server-runtime-info inter">
             Runtime:

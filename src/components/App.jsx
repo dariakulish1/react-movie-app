@@ -21,7 +21,7 @@ export const App = () => {
     fetch(getUrl('genre/movie/list?'), options)
       .then((response) => response.json())
       .then((data) => {
-        setGenres(data?.genres);
+        setGenres(data?.genres ?? []);
         console.log('genres ', data.genres);
       })
       .catch((err) => console.error(err));
@@ -32,7 +32,10 @@ export const App = () => {
         <Route element={<Layout />}>
           <Route path={PAGES.HOME} element={<HomePage genres={genres} />} />
           <Route path={PAGES.FAVORITES} element={<FavoritesPage />} />
-          <Route path={`${PAGES.MOVIE}/:movieid`} element={<MovieInfoPage />} />
+          <Route
+            path={`${PAGES.MOVIE}/:movieid`}
+            element={<MovieInfoPage genres={genres} />}
+          />
         </Route>
       </Routes>
     </div>

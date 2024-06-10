@@ -43,7 +43,7 @@ export const MovieList = ({ activebounding, movies, genres }) => {
           });
           return (
             <FlexBoxes
-              genresids={genresIds}
+              genresIds={genresIds}
               genres={genres}
               title={title}
               activebounding={activebounding}
