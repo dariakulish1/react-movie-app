@@ -7,15 +7,13 @@ import { Spinner } from '../../components/Spinner';
 import { getUrl } from '../../utils/url';
 
 const propTypes = {
-  id: PropTypes.number.isRequired,
   genres: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
     }),
   ).isRequired,
-  elements: PropTypes.shape({
-    id: PropTypes.number,
+  data: PropTypes.shape({
     title: PropTypes.string.isRequired,
     original_title: PropTypes.string.isRequired,
     vote_average: PropTypes.number.isRequired,
@@ -23,7 +21,7 @@ const propTypes = {
   }).isRequired,
 };
 
-export const HomePage = ({ id, genres }) => {
+export const HomePage = ({ genres }) => {
   const [data, setData] = useState([]);
   const [findMovie, setFindMovie] = useState([]);
   const [isFound, setFound] = useState(false);

@@ -7,7 +7,7 @@ import { Spinner } from '../Spinner';
 import { getUrl } from '../../utils/url';
 
 export const CastBox = () => {
-  const { movieid } = useParams();
+  const { movieId } = useParams();
   const [data, setData] = useState([]);
   const [isError, setError] = useState(false);
   const [isLoading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ export const CastBox = () => {
       method: 'GET',
       headers,
     };
-    fetch(getUrl(`movie/${movieid}/credits?`), options)
+    fetch(getUrl(`movie/${movieId}/credits?`), options)
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(Error('Error'));
@@ -37,7 +37,7 @@ export const CastBox = () => {
         setLoading(false);
         setError(true);
       });
-  }, [movieid]);
+  }, [movieId]);
   if (isLoading) {
     return (
       <div>

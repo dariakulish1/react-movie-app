@@ -16,6 +16,11 @@ const propTypes = {
       name: PropTypes.string,
     }),
   ).isRequired,
+  // videos: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     key: PropTypes.string,
+  //   }),
+  // ).isRequired,
   data: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string.isRequired,
@@ -25,21 +30,18 @@ const propTypes = {
   }).isRequired,
 };
 export const MovieInfoPage = ({ genres }) => {
-  const { movieid } = useParams();
+  const { movieId } = useParams();
+  const [videos, setVideos] = useState({});
   const [data, setData] = useState({});
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
+
   useEffect(() => {
     const options = {
       method: 'GET',
       headers,
     };
-    fetch(getUrl(`movie/${movieid}?`), options)
+    fetch(getUrl(`movie/${movieId}?`), options)
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(Error('Error'));
@@ -53,9 +55,25 @@ export const MovieInfoPage = ({ genres }) => {
       .then((response) => response)
       .catch((err) => {
         setError(true);
+        setLoading(false);
       });
-  }, [movieid]);
-  console.log('datagen(MIP) ', data.genres);
+    fetch(getUrl(`movie/${movieId}/videos?`), options)
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject(Error('Error'));
+        }
+        return response.json();
+      })
+      .then((videos) => {
+        setVideos(videos);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
+        setLoading(false);
+      });
+  }, [movieId]);
+  console.log('videos(MIP) ', videos.results);
   if (loading) {
     return (
       <div>
@@ -67,10 +85,12 @@ export const MovieInfoPage = ({ genres }) => {
   if (isError) {
     return <div className="container">Sorry, it is error</div>;
   }
-  const allGenres = data.genres.map((genreId) => {
-    const genre = genres.find((g) => g.id === genreId);
-    return genre?.name;
-  });
+  const allGenres = data.genres
+    .map((genreId) => {
+      const genre = genres.find((g) => g.id === genreId.id);
+      return genre.name;
+    })
+    .join(', ');
   console.log('allGenres(MIP) ', allGenres);
   return (
     <div className="info-box container">
@@ -141,14 +161,21 @@ export const MovieInfoPage = ({ genres }) => {
       <p className="info-box__trailers-title inter">Trailers</p>
       <div className="info-box__trailer-video">
         <div className="info-box__video-with-title">
-          <img
-            className="info-box__server-trailer-video cursor"
-            src={trailer1}
-            alt="trailer-1"
-          />
-          <p className="info-box__official-trailer-title">Official trailer 1</p>
+          {videos.results
+            .map(({ key }) => {
+              return (
+                <iframe
+                  className="info-box__server-trailer-video cursor"
+                  src={`https://www.youtube.com/watch?v=${key}`}
+                  title="Official trailer 1"
+                  allowFullScreen
+                />
+              );
+            })
+            .slice(0, 3)}
+          {/* <p className="info-box__official-trailer-title">Official trailer 1</p> */}
         </div>
-        <div className="info-box__video-with-title">
+        {/* <div className="info-box__video-with-title">
           <img
             className="info-box__server-trailer-video cursor"
             src={trailer2}
@@ -157,7 +184,7 @@ export const MovieInfoPage = ({ genres }) => {
           <p className="info-box__official-trailer-title inter">
             Official trailer 2
           </p>
-        </div>
+        </div> */}
       </div>
       <hr />
       <p className="info-box__cast-title inter">Cast</p>

@@ -11,7 +11,7 @@ const propTypes = {
       name: PropTypes.string,
     }),
   ).isRequired,
-  movieid: PropTypes.number.isRequired,
+  movieId: PropTypes.number.isRequired,
   activebounding: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   original_title: PropTypes.string.isRequired,
@@ -25,7 +25,7 @@ export const FlexBoxes = ({
   genresIds,
   title,
   activebounding,
-  movieid,
+  movieId,
   original_title: originalTitle,
   vote_average: voteAverage,
   poster_path: posterPath,
@@ -39,7 +39,7 @@ export const FlexBoxes = ({
     .join(' • ');
   console.log('allGenres(FB) ', allGenres);
   return (
-    <Link className="flex-box" to={`/movie/${movieid}`}>
+    <Link className="flex-box" to={`/movie/${movieId}`}>
       <img
         className="flex-box__server-img"
         src={`https://image.tmdb.org/t/p/w185/${posterPath}`}

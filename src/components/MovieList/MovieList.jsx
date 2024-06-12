@@ -47,7 +47,7 @@ export const MovieList = ({ activebounding, movies, genres }) => {
               genres={genres}
               title={title}
               activebounding={activebounding}
-              movieid={id}
+              movieId={id}
               original_title={originalTitle}
               vote_average={voteAverage}
               poster_path={posterPath}

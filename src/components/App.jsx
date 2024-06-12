@@ -33,7 +33,7 @@ export const App = () => {
           <Route path={PAGES.HOME} element={<HomePage genres={genres} />} />
           <Route path={PAGES.FAVORITES} element={<FavoritesPage />} />
           <Route
-            path={`${PAGES.MOVIE}/:movieid`}
+            path={`${PAGES.MOVIE}/:movieId`}
             element={<MovieInfoPage genres={genres} />}
           />
         </Route>
