@@ -4,10 +4,10 @@ import { MovieList } from '../../components/MovieList';
 import farstar from '../../images/far star.svg';
 
 const propTypes = {
-  activebounding: PropTypes.node.isRequired,
+  // activebounding: PropTypes.node.isRequired,
 };
 
-export const FavoritesPage = ({ activebounding }) => {
+export const FavoritesPage = () => {
   return (
     <div className="saved-movie container inter">
       <h1 className="saved-movie__page-head">Favorites</h1>

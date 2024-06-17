@@ -14,10 +14,10 @@ const propTypes = {
     }),
   ).isRequired,
   data: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    original_title: PropTypes.string.isRequired,
-    vote_average: PropTypes.number.isRequired,
-    poster_path: PropTypes.node.isRequired,
+    title: PropTypes.string,
+    original_title: PropTypes.string,
+    vote_average: PropTypes.number,
+    poster_path: PropTypes.string,
   }).isRequired,
 };
 
@@ -67,7 +67,6 @@ export const HomePage = ({ genres }) => {
       .then((data) => {
         setData(data.results);
         setLoading(false);
-        console.log('genres home ', genres);
       })
       .then((response) => response)
       .catch((err) => {

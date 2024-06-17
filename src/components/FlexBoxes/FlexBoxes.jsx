@@ -16,7 +16,7 @@ const propTypes = {
   title: PropTypes.string.isRequired,
   original_title: PropTypes.string.isRequired,
   vote_average: PropTypes.number.isRequired,
-  poster_path: PropTypes.node.isRequired,
+  poster_path: PropTypes.string.isRequired,
   genresIds: PropTypes.arrayOf(PropTypes.shape(PropTypes.number)).isRequired,
 };
 
@@ -37,7 +37,7 @@ export const FlexBoxes = ({
     })
     .slice(0, 3)
     .join(' • ');
-  console.log('allGenres(FB) ', allGenres);
+
   return (
     <Link className="flex-box" to={`/movie/${movieId}`}>
       <img

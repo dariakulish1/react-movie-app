@@ -12,15 +12,16 @@ const propTypes = {
   ).isRequired,
   movies: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      original_title: PropTypes.string.isRequired,
-      vote_average: PropTypes.number.isRequired,
-      poster_path: PropTypes.node.isRequired,
+      id: PropTypes.number,
+      title: PropTypes.string,
+      original_title: PropTypes.string,
+      vote_average: PropTypes.number,
+      poster_path: PropTypes.string,
       genre_ids: PropTypes.arrayOf(PropTypes.number),
     }),
   ).isRequired,
 };
+
 export const MovieList = ({ activebounding, movies, genres }) => {
   return (
     <div className="div-list container">
@@ -35,11 +36,10 @@ export const MovieList = ({ activebounding, movies, genres }) => {
         }) => {
           movies.forEach((movie) => {
             const { genre_ids: genresIds } = movie;
-            const allGenres = genresIds.map((genreId) => {
+            genresIds.map((genreId) => {
               const genre = genres.find((g) => g.id === genreId);
               return genre.name;
             });
-            console.log('allGenres(ML) ', allGenres);
           });
           return (
             <FlexBoxes

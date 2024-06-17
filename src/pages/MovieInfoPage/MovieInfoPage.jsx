@@ -1,9 +1,7 @@
-import PropTypes, { element } from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
-import trailer1 from '../../images/trailer1.png';
-import trailer2 from '../../images/trailer2.png';
 import { CastBox } from '../../components/CastBox';
 import { headers } from '../../utils/headers';
 import { Spinner } from '../../components/Spinner';
@@ -23,15 +21,15 @@ const propTypes = {
   // ).isRequired,
   data: PropTypes.shape({
     id: PropTypes.number,
-    title: PropTypes.string.isRequired,
-    original_title: PropTypes.string.isRequired,
-    vote_average: PropTypes.number.isRequired,
-    poster_path: PropTypes.node.isRequired,
+    title: PropTypes.string,
+    original_title: PropTypes.string,
+    vote_average: PropTypes.number,
+    poster_path: PropTypes.string,
   }).isRequired,
 };
 export const MovieInfoPage = ({ genres }) => {
   const { movieId } = useParams();
-  const [videos, setVideos] = useState({});
+  const [videos, setVideos] = useState([]);
   const [data, setData] = useState({});
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -65,15 +63,10 @@ export const MovieInfoPage = ({ genres }) => {
         return response.json();
       })
       .then((videos) => {
-        setVideos(videos);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(true);
-        setLoading(false);
+        setVideos(videos.results);
       });
   }, [movieId]);
-  console.log('videos(MIP) ', videos.results);
+
   if (loading) {
     return (
       <div>
@@ -86,12 +79,11 @@ export const MovieInfoPage = ({ genres }) => {
     return <div className="container">Sorry, it is error</div>;
   }
   const allGenres = data.genres
-    .map((genreId) => {
-      const genre = genres.find((g) => g.id === genreId.id);
-      return genre.name;
+    .map(({ name }) => {
+      return name;
     })
     .join(', ');
-  console.log('allGenres(MIP) ', allGenres);
+
   return (
     <div className="info-box container">
       <div className="info-box__back-case">
@@ -161,16 +153,27 @@ export const MovieInfoPage = ({ genres }) => {
       <p className="info-box__trailers-title inter">Trailers</p>
       <div className="info-box__trailer-video">
         <div className="info-box__video-with-title">
-          {videos.results
+          {videos
             .map(({ key }) => {
+              // console.log('VIDEO', videos.results[0].key);
+              // if (site === 'YouTube') {
               return (
                 <iframe
+                  key={key}
                   className="info-box__server-trailer-video cursor"
-                  src={`https://www.youtube.com/watch?v=${key}`}
+                  src={`https://www.youtube.com/embed/${key}`}
                   title="Official trailer 1"
                   allowFullScreen
                 />
               );
+              // }
+              // if (site !== 'YouTube') {
+              //   return (
+              //     <p className="info-box__not-found-video">
+              //       Video is not found
+              //     </p>
+              //   );
+              // }
             })
             .slice(0, 3)}
           {/* <p className="info-box__official-trailer-title">Official trailer 1</p> */}
