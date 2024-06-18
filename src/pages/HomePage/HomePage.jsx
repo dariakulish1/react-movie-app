@@ -13,15 +13,18 @@ const propTypes = {
       name: PropTypes.string,
     }),
   ).isRequired,
+  genLoading: PropTypes.bool.isRequired,
   data: PropTypes.shape({
-    title: PropTypes.string,
-    original_title: PropTypes.string,
-    vote_average: PropTypes.number,
-    poster_path: PropTypes.string,
+    results: PropTypes.shape({
+      title: PropTypes.string,
+      original_title: PropTypes.string,
+      vote_average: PropTypes.number,
+      poster_path: PropTypes.string,
+    }),
   }).isRequired,
 };
 
-export const HomePage = ({ genres }) => {
+export const HomePage = ({ genres, genLoading }) => {
   const [data, setData] = useState([]);
   const [findMovie, setFindMovie] = useState([]);
   const [isFound, setFound] = useState(false);
@@ -43,12 +46,6 @@ export const HomePage = ({ genres }) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
-
-  useEffect(() => {
     const options = {
       method: 'GET',
       headers,
@@ -67,6 +64,7 @@ export const HomePage = ({ genres }) => {
       .then((data) => {
         setData(data.results);
         setLoading(false);
+        console.log(data);
       })
       .then((response) => response)
       .catch((err) => {
@@ -90,7 +88,7 @@ export const HomePage = ({ genres }) => {
       .catch((err) => {});
   };
 
-  if (loading) {
+  if (loading || genLoading) {
     return (
       <div>
         <Spinner />

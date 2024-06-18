@@ -64,6 +64,11 @@ export const FlexBoxes = ({
               alt="bounding"
             />
           )}
+          <img
+            className="flex-box__bounding cursor"
+            src={bounding}
+            alt="bounding"
+          />
         </div>
       </div>
       <div className="flex-box__movie-titles">

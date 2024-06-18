@@ -11,6 +11,7 @@ import { PAGES } from '../constants';
 
 export const App = () => {
   const [genres, setGenres] = useState([]);
+  const [genLoading, SetGenLoading] = useState(true);
 
   useEffect(() => {
     const options = {
@@ -19,18 +20,29 @@ export const App = () => {
     };
 
     fetch(getUrl('genre/movie/list?'), options)
-      .then((response) => response.json())
-      .then((data) => {
-        setGenres(data?.genres ?? []);
-        console.log('genres ', data.genres);
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject(Error('Error'));
+        }
+        return response.json();
       })
-      .catch((err) => console.error(err));
+      .then((data) => {
+        setGenres(data.genres);
+        SetGenLoading(false);
+      })
+      .catch(() => {
+        SetGenLoading(false);
+      });
   }, []);
+
   return (
     <div className="movie-div">
       <Routes>
         <Route element={<Layout />}>
-          <Route path={PAGES.HOME} element={<HomePage genres={genres} />} />
+          <Route
+            path={PAGES.HOME}
+            element={<HomePage genres={genres} genLoading={genLoading} />}
+          />
           <Route path={PAGES.FAVORITES} element={<FavoritesPage />} />
           <Route
             path={`${PAGES.MOVIE}/:movieId`}
