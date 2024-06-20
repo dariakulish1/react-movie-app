@@ -3,7 +3,6 @@ import './MovieList.scss';
 import { FlexBoxes } from '../FlexBoxes';
 
 const propTypes = {
-  activebounding: PropTypes.node.isRequired,
   genres: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -22,7 +21,7 @@ const propTypes = {
   ).isRequired,
 };
 
-export const MovieList = ({ activebounding, movies, genres }) => {
+export const MovieList = ({ movies, genres }) => {
   return (
     <div className="div-list container">
       {movies?.map(
@@ -43,10 +42,10 @@ export const MovieList = ({ activebounding, movies, genres }) => {
           });
           return (
             <FlexBoxes
+              key={id}
               genresIds={genresIds}
               genres={genres}
               title={title}
-              activebounding={activebounding}
               movieId={id}
               original_title={originalTitle}
               vote_average={voteAverage}

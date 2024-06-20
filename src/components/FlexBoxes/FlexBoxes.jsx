@@ -12,19 +12,17 @@ const propTypes = {
     }),
   ).isRequired,
   movieId: PropTypes.number.isRequired,
-  activebounding: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   original_title: PropTypes.string.isRequired,
   vote_average: PropTypes.number.isRequired,
   poster_path: PropTypes.string.isRequired,
-  genresIds: PropTypes.arrayOf(PropTypes.shape(PropTypes.number)).isRequired,
+  genresIds: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export const FlexBoxes = ({
   genres,
   genresIds,
   title,
-  activebounding,
   movieId,
   original_title: originalTitle,
   vote_average: voteAverage,
@@ -57,13 +55,11 @@ export const FlexBoxes = ({
           </p>
         </div>
         <div className="flex-box__saved-movie">
-          {activebounding || (
-            <img
-              className="flex-box__bounding cursor"
-              src={bounding}
-              alt="bounding"
-            />
-          )}
+          <img
+            className="flex-box__bounding cursor"
+            src={bounding}
+            alt="bounding"
+          />
           <img
             className="flex-box__bounding cursor"
             src={bounding}

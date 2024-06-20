@@ -2,7 +2,6 @@ import './CastBox.scss';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import unnamed from '../../images/unnamed.png';
-import { headers } from '../../utils/headers';
 import { Spinner } from '../Spinner';
 import { getUrl } from '../../utils/url';
 
@@ -18,17 +17,7 @@ export const CastBox = () => {
   }, []);
 
   useEffect(() => {
-    const options = {
-      method: 'GET',
-      headers,
-    };
-    fetch(getUrl(`movie/${movieId}/credits?`), options)
-      .then((response) => {
-        if (!response.ok) {
-          return Promise.reject(Error('Error'));
-        }
-        return response.json();
-      })
+    getUrl(`movie/${movieId}/credits?`)
       .then((data) => {
         setLoading(false);
         setData(data.cast);
@@ -52,7 +41,7 @@ export const CastBox = () => {
     <div className="info-cast-box">
       {data.map(({ character, name, profile_path: profilePath }) => {
         return (
-          <div className="info-cast-box__all-cast-info">
+          <div key={name} className="info-cast-box__all-cast-info">
             <img
               className="info-cast-box__actor-photo"
               src={

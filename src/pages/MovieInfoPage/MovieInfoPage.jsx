@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
 import { CastBox } from '../../components/CastBox';
-import { headers } from '../../utils/headers';
 import { Spinner } from '../../components/Spinner';
 import { getUrl } from '../../utils/url';
 
@@ -14,18 +13,6 @@ const propTypes = {
       name: PropTypes.string,
     }),
   ).isRequired,
-  // videos: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     key: PropTypes.string,
-  //   }),
-  // ).isRequired,
-  data: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    original_title: PropTypes.string,
-    vote_average: PropTypes.number,
-    poster_path: PropTypes.string,
-  }).isRequired,
 };
 export const MovieInfoPage = ({ genres }) => {
   const { movieId } = useParams();
@@ -35,17 +22,7 @@ export const MovieInfoPage = ({ genres }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const options = {
-      method: 'GET',
-      headers,
-    };
-    fetch(getUrl(`movie/${movieId}?`), options)
-      .then((response) => {
-        if (!response.ok) {
-          return Promise.reject(Error('Error'));
-        }
-        return response.json();
-      })
+    getUrl(`movie/${movieId}?`)
       .then((data) => {
         setData(data);
         setLoading(false);
@@ -55,16 +32,11 @@ export const MovieInfoPage = ({ genres }) => {
         setError(true);
         setLoading(false);
       });
-    fetch(getUrl(`movie/${movieId}/videos?`), options)
-      .then((response) => {
-        if (!response.ok) {
-          return Promise.reject(Error('Error'));
-        }
-        return response.json();
-      })
+    getUrl(`movie/${movieId}/videos?`)
       .then((videos) => {
         setVideos(videos.results);
-      });
+      })
+      .catch((err) => {});
   }, [movieId]);
 
   if (loading) {
@@ -154,40 +126,28 @@ export const MovieInfoPage = ({ genres }) => {
       <div className="info-box__trailer-video">
         <div className="info-box__video-with-title">
           {videos
-            .map(({ key }) => {
-              // console.log('VIDEO', videos.results[0].key);
-              // if (site === 'YouTube') {
-              return (
-                <iframe
-                  key={key}
-                  className="info-box__server-trailer-video cursor"
-                  src={`https://www.youtube.com/embed/${key}`}
-                  title="Official trailer 1"
-                  allowFullScreen
-                />
-              );
-              // }
-              // if (site !== 'YouTube') {
-              //   return (
-              //     <p className="info-box__not-found-video">
-              //       Video is not found
-              //     </p>
-              //   );
-              // }
+            .map(({ key, site }) => {
+              if (site === 'YouTube') {
+                return (
+                  <iframe
+                    key={key}
+                    className="info-box__server-trailer-video cursor"
+                    src={`https://www.youtube.com/embed/${key}`}
+                    title="Official trailer 1"
+                    allowFullScreen
+                  />
+                );
+              }
+              if (site !== 'YouTube') {
+                return (
+                  <p className="info-box__not-found-video">
+                    Video is not found
+                  </p>
+                );
+              }
             })
             .slice(0, 3)}
-          {/* <p className="info-box__official-trailer-title">Official trailer 1</p> */}
         </div>
-        {/* <div className="info-box__video-with-title">
-          <img
-            className="info-box__server-trailer-video cursor"
-            src={trailer2}
-            alt="trailer-2"
-          />
-          <p className="info-box__official-trailer-title inter">
-            Official trailer 2
-          </p>
-        </div> */}
       </div>
       <hr />
       <p className="info-box__cast-title inter">Cast</p>

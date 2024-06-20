@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import './HomePage.scss';
 import { MovieList } from '../../components/MovieList';
-import { headers } from '../../utils/headers';
 import { Spinner } from '../../components/Spinner';
 import { getUrl } from '../../utils/url';
 
@@ -14,14 +13,6 @@ const propTypes = {
     }),
   ).isRequired,
   genLoading: PropTypes.bool.isRequired,
-  data: PropTypes.shape({
-    results: PropTypes.shape({
-      title: PropTypes.string,
-      original_title: PropTypes.string,
-      vote_average: PropTypes.number,
-      poster_path: PropTypes.string,
-    }),
-  }).isRequired,
 };
 
 export const HomePage = ({ genres, genLoading }) => {
@@ -46,42 +37,18 @@ export const HomePage = ({ genres, genLoading }) => {
   };
 
   useEffect(() => {
-    const options = {
-      method: 'GET',
-      headers,
-    };
-    const promise = fetch(getUrl('movie/popular?'), {
-      headers,
-      options,
-    });
-    promise
-      .then((response) => {
-        if (!response.ok) {
-          return Promise.reject(Error('Error'));
-        }
-        return response.json();
-      })
+    getUrl('movie/popular?')
       .then((data) => {
         setData(data.results);
         setLoading(false);
-        console.log(data);
       })
-      .then((response) => response)
       .catch((err) => {
         setError(true);
       });
   }, [genres]);
 
   const handleMovieChange = (inputText) => {
-    const options = {
-      method: 'GET',
-      headers,
-    };
-    fetch(
-      getUrl(`search/movie?query=${inputText}&include_adult=false&`),
-      options,
-    )
-      .then((response) => response.json())
+    getUrl(`search/movie?query=${inputText}&include_adult=false&`)
       .then((response) => {
         setFindMovie(response.results);
       })

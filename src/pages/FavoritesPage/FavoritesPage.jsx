@@ -1,11 +1,6 @@
-import PropTypes from 'prop-types';
 import './FavoritesPage.scss';
 import { MovieList } from '../../components/MovieList';
 import farstar from '../../images/far star.svg';
-
-const propTypes = {
-  // activebounding: PropTypes.node.isRequired,
-};
 
 export const FavoritesPage = () => {
   return (
@@ -23,5 +18,3 @@ export const FavoritesPage = () => {
     </div>
   );
 };
-
-FavoritesPage.propTypes = propTypes;

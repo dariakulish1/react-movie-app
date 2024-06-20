@@ -4,7 +4,6 @@ import { HomePage } from '../pages/HomePage';
 import { FavoritesPage } from '../pages/FavoritesPage';
 import { Layout } from './Layout';
 import { MovieInfoPage } from '../pages/MovieInfoPage';
-import { headers } from '../utils/headers';
 import { getUrl } from '../utils/url';
 import './style/App.scss';
 import { PAGES } from '../constants';
@@ -14,18 +13,7 @@ export const App = () => {
   const [genLoading, SetGenLoading] = useState(true);
 
   useEffect(() => {
-    const options = {
-      method: 'GET',
-      headers,
-    };
-
-    fetch(getUrl('genre/movie/list?'), options)
-      .then((response) => {
-        if (!response.ok) {
-          return Promise.reject(Error('Error'));
-        }
-        return response.json();
-      })
+    getUrl('genre/movie/list?')
       .then((data) => {
         setGenres(data.genres);
         SetGenLoading(false);
