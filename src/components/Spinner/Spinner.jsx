@@ -5,7 +5,6 @@ export const Spinner = () => {
   const width = '80';
   return (
     <RevolvingDot
-      className="container"
       height={height}
       width={width}
       color="#4fa94d"

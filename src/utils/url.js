@@ -9,7 +9,7 @@ export const urlApi = (url) => {
   return `https://api.themoviedb.org/3/${url}language=en-US&page=1`;
 };
 
-export const getUrl = (url) => {
+export const getMovieFetch = (url) => {
   return fetch(urlApi(url), options).then((response) => {
     if (!response.ok) {
       return Promise.reject(Error('Error'));

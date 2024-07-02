@@ -40,6 +40,7 @@ export const MovieList = ({ movies, genres }) => {
               return genre.name;
             });
           });
+
           return (
             <FlexBoxes
               key={id}

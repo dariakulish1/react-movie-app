@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import unnamed from '../../images/unnamed.png';
 import { Spinner } from '../Spinner';
-import { getUrl } from '../../utils/url';
+import { getMovieFetch } from '../../utils/url';
 
 export const CastBox = () => {
   const { movieId } = useParams();
@@ -17,7 +17,7 @@ export const CastBox = () => {
   }, []);
 
   useEffect(() => {
-    getUrl(`movie/${movieId}/credits?`)
+    getMovieFetch(`movie/${movieId}/credits?`)
       .then((data) => {
         setLoading(false);
         setData(data.cast);
@@ -30,7 +30,7 @@ export const CastBox = () => {
   if (isLoading) {
     return (
       <div>
-        <Spinner />
+        <Spinner className="container" />
       </div>
     );
   }

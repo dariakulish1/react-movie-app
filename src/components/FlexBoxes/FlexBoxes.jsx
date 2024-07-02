@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import './FlexBoxes.scss';
-import bounding from '../../images/bounding-24.svg';
+import { savedBounding } from '../../images/savedBounding';
 import solidStar from '../../images/star-solid.svg';
 
 const propTypes = {
@@ -36,13 +37,24 @@ export const FlexBoxes = ({
     .slice(0, 3)
     .join(' • ');
 
+  const [fillColor, setButtonColor] = useState('white');
+  const handleButtonClick = () => {
+    setButtonColor(savedBounding(fillColor === 'white'));
+    const savedMovie = JSON.stringify(movieId);
+    localStorage.setItem('savedMovie', savedMovie);
+    const savedMoviesArr = savedMovie.push(movieId);
+    console.log('savedMovie', savedMovie);
+    console.log('savedMoviesArr', savedMoviesArr);
+  };
   return (
-    <Link className="flex-box" to={`/movie/${movieId}`}>
-      <img
-        className="flex-box__server-img"
-        src={`https://image.tmdb.org/t/p/w185/${posterPath}`}
-        alt=""
-      />
+    <div className="flex-box">
+      <Link to={`/movie/${movieId}`}>
+        <img
+          className="flex-box__server-img"
+          src={`https://image.tmdb.org/t/p/w185/${posterPath}`}
+          alt=""
+        />
+      </Link>
       <div className="flex-box__bottom-panel">
         <div className="flex-box__rating-box">
           <p className="flex-box__rating-num inter">
@@ -54,28 +66,25 @@ export const FlexBoxes = ({
             {voteAverage.toFixed(1)}
           </p>
         </div>
-        <div className="flex-box__saved-movie">
-          <img
-            className="flex-box__bounding cursor"
-            src={bounding}
-            alt="bounding"
-          />
-          <img
-            className="flex-box__bounding cursor"
-            src={bounding}
-            alt="bounding"
-          />
+        <button
+          className="flex-box__saved-movie"
+          type="button"
+          onClick={handleButtonClick}
+        >
+          {savedBounding(fillColor)}
+        </button>
+      </div>
+      <Link className="flex-box" to={`/movie/${movieId}`}>
+        <div className="flex-box__movie-titles">
+          <p className="flex-box__main-title inter">{title}</p>
+          <p className="flex-box__original-title inter">{originalTitle}</p>
+          <p className="flex-box__movie-genres inter">{allGenres}</p>
+          <div className="flex-box__age-limit">18+</div>
+          <div className="flex-box__quality">Full HD</div>
+          <div className="flex-box__rate-num">{`IMDb ${voteAverage.toFixed(1)}`}</div>
         </div>
-      </div>
-      <div className="flex-box__movie-titles">
-        <p className="flex-box__main-title inter">{title}</p>
-        <p className="flex-box__original-title inter">{originalTitle}</p>
-        <p className="flex-box__movie-genres inter">{allGenres}</p>
-        <div className="flex-box__age-limit">18+</div>
-        <div className="flex-box__quality">Full HD</div>
-        <div className="flex-box__rate-num">{`IMDb ${voteAverage.toFixed(1)}`}</div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
