@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import './HomePage.scss';
 import { MovieList } from '../../components/MovieList';
 import { Spinner } from '../../components/Spinner';
-import { getMovieFetch } from '../../utils/url';
+import { getRequest } from '../../utils/url';
 
 const propTypes = {
   genres: PropTypes.arrayOf(
@@ -37,7 +37,7 @@ export const HomePage = ({ genres, genLoading }) => {
   };
 
   useEffect(() => {
-    getMovieFetch('movie/popular?')
+    getRequest('movie/popular?')
       .then((data) => {
         setData(data.results);
         setLoading(false);
@@ -48,7 +48,7 @@ export const HomePage = ({ genres, genLoading }) => {
   }, [genres]);
 
   const handleMovieChange = (inputText) => {
-    getMovieFetch(`search/movie?query=${inputText}&include_adult=false&`)
+    getRequest(`search/movie?query=${inputText}&include_adult=false&`)
       .then((response) => {
         setFindMovie(response.results);
       })

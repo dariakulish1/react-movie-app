@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
 import { CastBox } from '../../components/CastBox';
 import { Spinner } from '../../components/Spinner';
-import { getMovieFetch } from '../../utils/url';
+import { getRequest } from '../../utils/url';
 
 const propTypes = {
   genres: PropTypes.arrayOf(
@@ -22,7 +22,7 @@ export const MovieInfoPage = ({ genres }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getMovieFetch(`movie/${movieId}?`)
+    getRequest(`movie/${movieId}?`)
       .then((data) => {
         setData(data);
         setLoading(false);
@@ -32,7 +32,7 @@ export const MovieInfoPage = ({ genres }) => {
         setError(true);
         setLoading(false);
       });
-    getMovieFetch(`movie/${movieId}/videos?`)
+    getRequest(`movie/${movieId}/videos?`)
       .then((videos) => {
         setVideos(videos.results);
       })

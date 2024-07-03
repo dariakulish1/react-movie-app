@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import './FlexBoxes.scss';
-import { savedBounding } from '../../images/savedBounding';
+import { SavedBounding } from '../../images/SavedBounding';
 import solidStar from '../../images/star-solid.svg';
 
 const propTypes = {
@@ -37,15 +37,26 @@ export const FlexBoxes = ({
     .slice(0, 3)
     .join(' • ');
 
-  const [fillColor, setButtonColor] = useState('white');
+  const [fillColor, setButtonColor] = useState('none');
   const handleButtonClick = () => {
-    setButtonColor(savedBounding(fillColor === 'white'));
-    const savedMovie = JSON.stringify(movieId);
-    localStorage.setItem('savedMovie', savedMovie);
-    const savedMoviesArr = savedMovie.push(movieId);
-    console.log('savedMovie', savedMovie);
-    console.log('savedMoviesArr', savedMoviesArr);
+    setButtonColor((fillColor) => (fillColor === 'none' ? 'white' : 'none'));
+
+    const savedMovies = localStorage.getItem('savedMovies') ?? '[]';
+    const savedMoviesNum = JSON.parse(savedMovies);
+
+    const movieIdIndex = savedMoviesNum.indexOf(movieId);
+    if (movieIdIndex === -1) {
+      savedMoviesNum.push(movieId);
+    } else {
+      savedMoviesNum.splice(movieIdIndex, 1);
+    }
+    console.log('movieIdIndex', movieIdIndex);
+
+    const savedMoviesStr = JSON.stringify(savedMoviesNum);
+    localStorage.setItem('savedMovies', savedMoviesStr);
+    console.log('savedMovie', savedMoviesStr);
   };
+
   return (
     <div className="flex-box">
       <Link to={`/movie/${movieId}`}>
@@ -71,7 +82,7 @@ export const FlexBoxes = ({
           type="button"
           onClick={handleButtonClick}
         >
-          {savedBounding(fillColor)}
+          {SavedBounding(fillColor)}
         </button>
       </div>
       <Link className="flex-box" to={`/movie/${movieId}`}>
