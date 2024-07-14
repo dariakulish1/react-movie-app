@@ -48,9 +48,9 @@ export const MovieList = ({ movies, genres }) => {
               genres={genres}
               title={title}
               movieId={id}
-              original_title={originalTitle}
-              vote_average={voteAverage}
-              poster_path={posterPath}
+              originalTitle={originalTitle}
+              voteAverage={voteAverage}
+              posterPath={posterPath}
             />
           );
         },

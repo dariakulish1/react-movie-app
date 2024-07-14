@@ -5,6 +5,7 @@ import './MovieInfoPage.scss';
 import { CastBox } from '../../components/CastBox';
 import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
+import { getPopularMovie } from '../../utils/getPopularMovie';
 
 const propTypes = {
   genres: PropTypes.arrayOf(
@@ -22,16 +23,10 @@ export const MovieInfoPage = ({ genres }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getRequest(`movie/${movieId}?`)
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      })
-      .then((response) => response)
-      .catch((err) => {
-        setError(true);
-        setLoading(false);
-      });
+    getPopularMovie().catch((err) => {
+      setError(true);
+      setLoading(false);
+    });
     getRequest(`movie/${movieId}/videos?`)
       .then((videos) => {
         setVideos(videos.results);
@@ -42,7 +37,7 @@ export const MovieInfoPage = ({ genres }) => {
   if (loading) {
     return (
       <div>
-        <Spinner className="container" />
+        <Spinner className="spinner container" />
         This page is loading...
       </div>
     );
@@ -55,7 +50,15 @@ export const MovieInfoPage = ({ genres }) => {
       return name;
     })
     .join(', ');
-
+  const {
+    poster_path: posterPath,
+    title,
+    original_title: originalTitle,
+    vote_average: voteAverage,
+    release_date: releaseDate,
+    runtime,
+    overview,
+  } = data;
   return (
     <div className="info-box container">
       <div className="info-box__back-case">
@@ -71,22 +74,22 @@ export const MovieInfoPage = ({ genres }) => {
         <div className="info-box__film-poster-box">
           <img
             className="info-box__film-poster"
-            src={`https://image.tmdb.org/t/p/w185/${data.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w185/${posterPath}`}
             alt="serverImage"
           />
         </div>
         <div className="info-box__detailed-info inter">
-          <p className="info-box__server-movie-name inter">{data.title}</p>
-          <p className="info-box__small-title inter">{data.original_title}</p>
+          <p className="info-box__server-movie-name inter">{title}</p>
+          <p className="info-box__small-title inter">{originalTitle}</p>
           <p className="info-box__server-movie-rating inter">
             Rating:{' '}
             <span className="info-box__span-num">
-              {data.vote_average ? data.vote_average.toFixed(1) : 0}
+              {voteAverage ? voteAverage.toFixed(1) : 0}
             </span>
           </p>
           <p className="info-box__server-data-release inter">
             Release data:
-            <span className="info-box__span-data">{data.release_date}</span>
+            <span className="info-box__span-data">{releaseDate}</span>
           </p>
           <p className="info-box__server-genres-info inter">
             Genre:
@@ -94,9 +97,7 @@ export const MovieInfoPage = ({ genres }) => {
           </p>
           <p className="info-box__server-runtime-info inter">
             Runtime:
-            <span className="info-box__span-runtime">
-              {data.runtime} minutes
-            </span>
+            <span className="info-box__span-runtime">{runtime} minutes</span>
           </p>
           <div className="info-box__buttons-box">
             <hr />
@@ -117,7 +118,7 @@ export const MovieInfoPage = ({ genres }) => {
           </div>
           <div className="info-box__film-description inter">
             <hr />
-            <p className="info-box__description-text">{data.overview}</p>
+            <p className="info-box__description-text">{overview}</p>
           </div>
         </div>
       </div>

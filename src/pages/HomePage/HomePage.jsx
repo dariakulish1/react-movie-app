@@ -57,8 +57,8 @@ export const HomePage = ({ genres, genLoading }) => {
 
   if (loading || genLoading) {
     return (
-      <div>
-        <Spinner className="container" />
+      <div className="spinner container">
+        <Spinner />
         This page is loading...
       </div>
     );

@@ -1,4 +1,4 @@
-export const SavedBounding = (fillColor) => {
+export const SavedBounding = ({ fillColor }) => {
   return (
     <svg
       aria-hidden="true"

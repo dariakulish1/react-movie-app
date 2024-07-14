@@ -14,9 +14,9 @@ const propTypes = {
   ).isRequired,
   movieId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  original_title: PropTypes.string.isRequired,
-  vote_average: PropTypes.number.isRequired,
-  poster_path: PropTypes.string.isRequired,
+  originalTitle: PropTypes.string.isRequired,
+  voteAverage: PropTypes.number.isRequired,
+  posterPath: PropTypes.string.isRequired,
   genresIds: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
@@ -25,9 +25,9 @@ export const FlexBoxes = ({
   genresIds,
   title,
   movieId,
-  original_title: originalTitle,
-  vote_average: voteAverage,
-  poster_path: posterPath,
+  originalTitle,
+  voteAverage,
+  posterPath,
 }) => {
   const allGenres = genresIds
     .map((genreId) => {
@@ -50,11 +50,9 @@ export const FlexBoxes = ({
     } else {
       savedMoviesNum.splice(movieIdIndex, 1);
     }
-    console.log('movieIdIndex', movieIdIndex);
 
     const savedMoviesStr = JSON.stringify(savedMoviesNum);
     localStorage.setItem('savedMovies', savedMoviesStr);
-    console.log('savedMovie', savedMoviesStr);
   };
 
   return (
@@ -82,7 +80,8 @@ export const FlexBoxes = ({
           type="button"
           onClick={handleButtonClick}
         >
-          {SavedBounding(fillColor)}
+          <SavedBounding fillColor={fillColor} />
+          <span>...</span>
         </button>
       </div>
       <Link className="flex-box" to={`/movie/${movieId}`}>
