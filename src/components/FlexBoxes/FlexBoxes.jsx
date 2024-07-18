@@ -78,10 +78,10 @@ export const FlexBoxes = ({
         <button
           className="flex-box__saved-movie"
           type="button"
+          aria-label="fav"
           onClick={handleButtonClick}
         >
           <SavedBounding fillColor={fillColor} />
-          <span>...</span>
         </button>
       </div>
       <Link className="flex-box" to={`/movie/${movieId}`}>

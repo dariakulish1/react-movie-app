@@ -5,7 +5,7 @@ import './MovieInfoPage.scss';
 import { CastBox } from '../../components/CastBox';
 import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
-import { getPopularMovie } from '../../utils/getPopularMovie';
+import { getMovieInfo } from '../../services/getMovieInfo';
 
 const propTypes = {
   genres: PropTypes.arrayOf(
@@ -23,10 +23,15 @@ export const MovieInfoPage = ({ genres }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPopularMovie().catch((err) => {
-      setError(true);
-      setLoading(false);
-    });
+    getMovieInfo(movieId)
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
+        setLoading(false);
+      });
     getRequest(`movie/${movieId}/videos?`)
       .then((videos) => {
         setVideos(videos.results);
@@ -50,15 +55,7 @@ export const MovieInfoPage = ({ genres }) => {
       return name;
     })
     .join(', ');
-  const {
-    poster_path: posterPath,
-    title,
-    original_title: originalTitle,
-    vote_average: voteAverage,
-    release_date: releaseDate,
-    runtime,
-    overview,
-  } = data;
+
   return (
     <div className="info-box container">
       <div className="info-box__back-case">

@@ -1,24 +1,20 @@
-import { getRequest } from './url';
+import { getRequest } from '../utils/url';
 
-export const getPopularMovie = (movieId) => {
-  getRequest(`movie/${movieId}?`).then(
+export const getMovieInfo = (movieId) => {
+  return getRequest(`movie/${movieId}?`).then(
     ({
       poster_path: posterPath,
-      title,
       original_title: originalTitle,
       vote_average: voteAverage,
       release_date: releaseDate,
-      runtime,
-      overview,
+      ...rest
     }) => {
       return {
+        ...rest,
         posterPath,
-        title,
         originalTitle,
         voteAverage,
         releaseDate,
-        runtime,
-        overview,
       };
     },
   );

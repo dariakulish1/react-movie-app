@@ -1,3 +1,8 @@
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  fillColor: PropTypes.string.isRequired,
+};
 export const SavedBounding = ({ fillColor }) => {
   return (
     <svg
@@ -18,3 +23,5 @@ export const SavedBounding = ({ fillColor }) => {
     </svg>
   );
 };
+
+SavedBounding.propTypes = propTypes;

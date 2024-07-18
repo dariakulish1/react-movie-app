@@ -65,7 +65,7 @@ export const HomePage = ({ genres, genLoading }) => {
   }
 
   if (isError) {
-    return <div>Sorry, it is error</div>;
+    return <div className="container">Sorry, it is error</div>;
   }
   return (
     <section className="films-list container">

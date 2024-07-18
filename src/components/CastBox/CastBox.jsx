@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import unnamed from '../../images/unnamed.png';
 import { Spinner } from '../Spinner';
-import { getRequest } from '../../utils/url';
+import { getMovieCast } from '../../services/getMovieCast';
 
 export const CastBox = () => {
   const { movieId } = useParams();
@@ -17,7 +17,7 @@ export const CastBox = () => {
   }, []);
 
   useEffect(() => {
-    getRequest(`movie/${movieId}/credits?`)
+    getMovieCast(movieId)
       .then((data) => {
         setLoading(false);
         setData(data.cast);
@@ -30,12 +30,12 @@ export const CastBox = () => {
   if (isLoading) {
     return (
       <div>
-        <Spinner className="container" />
+        <Spinner className="spinner container" />
       </div>
     );
   }
   if (isError) {
-    return <div>Sorry, it is error</div>;
+    return <div className="container">Sorry, it is error</div>;
   }
   return (
     <div className="info-cast-box">
