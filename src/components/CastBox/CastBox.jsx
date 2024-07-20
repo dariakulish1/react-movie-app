@@ -37,11 +37,12 @@ export const CastBox = () => {
   if (isError) {
     return <div className="container">Sorry, it is error</div>;
   }
+
   return (
     <div className="info-cast-box">
       {data.map(({ character, name, profile_path: profilePath }) => {
         return (
-          <div key={name} className="info-cast-box__all-cast-info">
+          <div key={profilePath} className="info-cast-box__all-cast-info">
             <img
               className="info-cast-box__actor-photo"
               src={

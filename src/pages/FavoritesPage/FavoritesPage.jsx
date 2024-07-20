@@ -1,18 +1,18 @@
 import './FavoritesPage.scss';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { MovieList } from '../../components/MovieList';
+import { FlexBoxes } from '../../components/FlexBoxes';
 import { Spinner } from '../../components/Spinner';
 import { getMovieInfo } from '../../services/getMovieInfo';
 
 export const FavoritesPage = () => {
-  const { movieId } = useParams();
   const [data, setData] = useState({});
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const savedMovieInfo = localStorage.getItem('savedMovies') ?? '[]';
+  const savedMovieInfoArr = JSON.parse(savedMovieInfo);
+  console.log(savedMovieInfoArr[3]);
   useEffect(() => {
-    getMovieInfo(movieId)
+    getMovieInfo(savedMovieInfoArr[3])
       .then((data) => {
         setData(data);
         setLoading(false);
@@ -21,7 +21,7 @@ export const FavoritesPage = () => {
         setError(true);
         setLoading(false);
       });
-  }, [movieId]);
+  }, []);
 
   if (loading) {
     return (
@@ -34,10 +34,20 @@ export const FavoritesPage = () => {
   if (isError) {
     return <div className="container">Sorry, it is error</div>;
   }
+
   return (
     <div className="saved-movie container inter">
       <h1 className="saved-movie__page-head">Favorites</h1>
-      <MovieList />
+      <FlexBoxes
+        key={savedMovieInfoArr}
+        genresIds={[]}
+        originalTitle={data.originalTitle}
+        genres={[]}
+        posterPath={data.posterPath}
+        movieId={savedMovieInfoArr[3]}
+        voteAverage={data.voteAverage}
+        title={data.title}
+      />
     </div>
   );
 };

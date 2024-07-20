@@ -41,8 +41,8 @@ export const MovieInfoPage = ({ genres }) => {
 
   if (loading) {
     return (
-      <div>
-        <Spinner className="spinner container" />
+      <div className="spinner container">
+        <Spinner />
         This page is loading...
       </div>
     );
@@ -55,6 +55,16 @@ export const MovieInfoPage = ({ genres }) => {
       return name;
     })
     .join(', ');
+
+  const {
+    posterPath,
+    title,
+    originalTitle,
+    voteAverage,
+    releaseDate,
+    runtime,
+    overview,
+  } = data;
 
   return (
     <div className="info-box container">
@@ -136,13 +146,9 @@ export const MovieInfoPage = ({ genres }) => {
                   />
                 );
               }
-              if (site !== 'YouTube') {
-                return (
-                  <p className="info-box__not-found-video">
-                    Video is not found
-                  </p>
-                );
-              }
+              return (
+                <p className="info-box__not-found-video">Video is not found</p>
+              );
             })
             .slice(0, 3)}
         </div>
