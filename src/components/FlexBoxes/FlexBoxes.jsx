@@ -22,6 +22,7 @@ const propTypes = {
 
 export const FlexBoxes = ({
   genres,
+  genresName,
   genresIds,
   title,
   movieId,
@@ -89,6 +90,7 @@ export const FlexBoxes = ({
           <p className="flex-box__main-title inter">{title}</p>
           <p className="flex-box__original-title inter">{originalTitle}</p>
           <p className="flex-box__movie-genres inter">{allGenres}</p>
+          <p className="flex-box__movie-genres inter">{genresName}</p>
           <div className="flex-box__age-limit">18+</div>
           <div className="flex-box__quality">Full HD</div>
           <div className="flex-box__rate-num">{`IMDb ${voteAverage.toFixed(1)}`}</div>

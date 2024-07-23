@@ -23,6 +23,8 @@ export const FavoritesPage = () => {
       });
   }, []);
 
+  console.log('dataID', data.genres?.[0].id);
+
   if (loading) {
     return (
       <div>
@@ -38,16 +40,21 @@ export const FavoritesPage = () => {
   return (
     <div className="saved-movie container inter">
       <h1 className="saved-movie__page-head">Favorites</h1>
+      {/* {data.map(({ posterPath, voteAverage, title, originalTitle, genres }) => {
+        return ( */}
       <FlexBoxes
         key={savedMovieInfoArr}
-        genresIds={[]}
-        originalTitle={data.originalTitle}
         genres={[]}
+        genresIds={[]}
+        genresName={data.genres?.[0].name}
+        originalTitle={data.originalTitle}
         posterPath={data.posterPath}
         movieId={savedMovieInfoArr[3]}
         voteAverage={data.voteAverage}
         title={data.title}
       />
+      {/* );
+      })} */}
     </div>
   );
 };
