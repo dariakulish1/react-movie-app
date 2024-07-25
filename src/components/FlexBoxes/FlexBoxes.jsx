@@ -6,37 +6,29 @@ import { SavedBounding } from '../../images/SavedBounding';
 import solidStar from '../../images/star-solid.svg';
 
 const propTypes = {
-  genres: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-    }),
-  ).isRequired,
   movieId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   originalTitle: PropTypes.string.isRequired,
   voteAverage: PropTypes.number.isRequired,
   posterPath: PropTypes.string.isRequired,
-  genresIds: PropTypes.arrayOf(PropTypes.number).isRequired,
+  allGenres: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export const FlexBoxes = ({
-  genres,
-  genresName,
-  genresIds,
+  allGenres,
   title,
   movieId,
   originalTitle,
   voteAverage,
   posterPath,
 }) => {
-  const allGenres = genresIds
-    .map((genreId) => {
-      const genre = genres.find((g) => g.id === genreId);
-      return genre.name;
-    })
-    .slice(0, 3)
-    .join(' • ');
+  // const allGenres = genresIds
+  //   .map((genreId) => {
+  //     const genre = genres.find((g) => g.id === genreId);
+  //     return genre.name;
+  //   })
+  //   .slice(0, 3)
+  //   .join(' • ');
 
   const [fillColor, setButtonColor] = useState('none');
   const handleButtonClick = () => {
@@ -90,7 +82,6 @@ export const FlexBoxes = ({
           <p className="flex-box__main-title inter">{title}</p>
           <p className="flex-box__original-title inter">{originalTitle}</p>
           <p className="flex-box__movie-genres inter">{allGenres}</p>
-          <p className="flex-box__movie-genres inter">{genresName}</p>
           <div className="flex-box__age-limit">18+</div>
           <div className="flex-box__quality">Full HD</div>
           <div className="flex-box__rate-num">{`IMDb ${voteAverage.toFixed(1)}`}</div>

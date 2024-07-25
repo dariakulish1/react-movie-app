@@ -40,12 +40,18 @@ export const MovieList = ({ movies, genres }) => {
               return genre.name;
             });
           });
+          const allGenres = genresIds
+            .map((genreId) => {
+              const genre = genres.find((g) => g.id === genreId);
+              return genre.name;
+            })
+            .slice(0, 3)
+            .join(' • ');
 
           return (
             <FlexBoxes
               key={id}
-              genresIds={genresIds}
-              genres={genres}
+              allGenres={allGenres}
               title={title}
               movieId={id}
               originalTitle={originalTitle}

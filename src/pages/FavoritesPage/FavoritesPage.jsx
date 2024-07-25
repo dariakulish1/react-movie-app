@@ -10,9 +10,9 @@ export const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
   const savedMovieInfo = localStorage.getItem('savedMovies') ?? '[]';
   const savedMovieInfoArr = JSON.parse(savedMovieInfo);
-  console.log(savedMovieInfoArr[3]);
+  console.log(savedMovieInfoArr[0]);
   useEffect(() => {
-    getMovieInfo(savedMovieInfoArr[3])
+    getMovieInfo(savedMovieInfoArr[0])
       .then((data) => {
         setData(data);
         setLoading(false);
@@ -21,14 +21,14 @@ export const FavoritesPage = () => {
         setError(true);
         setLoading(false);
       });
-  }, []);
+  }, [savedMovieInfoArr[0]]);
 
   console.log('dataID', data.genres?.[0].id);
 
   if (loading) {
     return (
-      <div>
-        <Spinner className="spinner container" />
+      <div className="spinner container">
+        <Spinner />
         This page is loading...
       </div>
     );
@@ -37,24 +37,38 @@ export const FavoritesPage = () => {
     return <div className="container">Sorry, it is error</div>;
   }
 
+  const allGenres =
+    data.genres
+      ?.map((genre) => genre.name)
+      .slice(0, 3)
+      .join(' • ') ?? [];
+  console.log('genres', allGenres);
+
   return (
     <div className="saved-movie container inter">
       <h1 className="saved-movie__page-head">Favorites</h1>
-      {/* {data.map(({ posterPath, voteAverage, title, originalTitle, genres }) => {
-        return ( */}
+      {/* {data.map(
+        ({
+          posterPath,
+          voteAverage,
+          title,
+          originalTitle,
+          savedMovieInfoArr,
+          allGenres,
+        }) => {
+          return ( */}
       <FlexBoxes
         key={savedMovieInfoArr}
-        genres={[]}
-        genresIds={[]}
-        genresName={data.genres?.[0].name}
-        originalTitle={data.originalTitle}
         posterPath={data.posterPath}
-        movieId={savedMovieInfoArr[3]}
         voteAverage={data.voteAverage}
         title={data.title}
+        originalTitle={data.originalTitle}
+        allGenres={allGenres}
+        movieId={savedMovieInfoArr}
       />
       {/* );
-      })} */}
+        },
+      )} */}
     </div>
   );
 };
