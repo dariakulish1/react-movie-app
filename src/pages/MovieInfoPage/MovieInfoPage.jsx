@@ -39,6 +39,16 @@ export const MovieInfoPage = ({ genres }) => {
       .catch((err) => {});
   }, [movieId]);
 
+  const [favMovieText, setText] = useState('Add to favorite');
+  useEffect(() => {
+    const localMovie = JSON.parse(localStorage.getItem('savedMovies') ?? '[]');
+    const textState =
+      localMovie.indexOf(movieId) === -1
+        ? 'Added to favorite'
+        : 'Add to favorite';
+    setText(textState);
+  }, [movieId]);
+
   if (loading) {
     return (
       <div className="spinner container">
@@ -65,6 +75,20 @@ export const MovieInfoPage = ({ genres }) => {
     runtime,
     overview,
   } = data;
+
+  const handleButtonClick = () => {
+    const favMovies = localStorage.getItem('savedMovies') ?? '[]';
+    const favMoviesNum = JSON.parse(favMovies);
+    const movieId2 = parseInt(movieId, 10);
+    const movieIdIndex = favMoviesNum.indexOf(movieId2);
+    if (movieIdIndex === -1) {
+      favMoviesNum.push(movieId2);
+    } else {
+      favMoviesNum.splice(movieIdIndex, 1);
+    }
+    const favMoviesStr = JSON.stringify(favMoviesNum);
+    localStorage.setItem('savedMovies', favMoviesStr);
+  };
 
   return (
     <div className="info-box container">
@@ -116,10 +140,11 @@ export const MovieInfoPage = ({ genres }) => {
                 &#9658; Watch movie
               </button>
               <button
+                onClick={handleButtonClick}
                 type="button"
                 className="info-box__button-to-add-to-fav cursor inter"
               >
-                Add to favorite
+                {favMovieText}
               </button>
             </div>
           </div>

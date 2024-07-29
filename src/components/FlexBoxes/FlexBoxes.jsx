@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './FlexBoxes.scss';
 import { SavedBounding } from '../../images/SavedBounding';
@@ -22,22 +22,21 @@ export const FlexBoxes = ({
   voteAverage,
   posterPath,
 }) => {
-  // const allGenres = genresIds
-  //   .map((genreId) => {
-  //     const genre = genres.find((g) => g.id === genreId);
-  //     return genre.name;
-  //   })
-  //   .slice(0, 3)
-  //   .join(' • ');
-
   const [fillColor, setButtonColor] = useState('none');
+
+  useEffect(() => {
+    const localMovie = JSON.parse(localStorage.getItem('savedMovies') ?? '[]');
+    const boundingColor = localMovie.indexOf(movieId) === -1 ? 'none' : 'white';
+    setButtonColor(boundingColor);
+  }, [movieId]);
+
   const handleButtonClick = () => {
     setButtonColor((fillColor) => (fillColor === 'none' ? 'white' : 'none'));
 
     const savedMovies = localStorage.getItem('savedMovies') ?? '[]';
     const savedMoviesNum = JSON.parse(savedMovies);
-
     const movieIdIndex = savedMoviesNum.indexOf(movieId);
+
     if (movieIdIndex === -1) {
       savedMoviesNum.push(movieId);
     } else {
@@ -45,6 +44,7 @@ export const FlexBoxes = ({
     }
 
     const savedMoviesStr = JSON.stringify(savedMoviesNum);
+    console.log(savedMoviesStr);
     localStorage.setItem('savedMovies', savedMoviesStr);
   };
 

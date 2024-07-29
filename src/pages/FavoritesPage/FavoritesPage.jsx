@@ -8,22 +8,24 @@ export const FavoritesPage = () => {
   const [data, setData] = useState({});
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+
   const savedMovieInfo = localStorage.getItem('savedMovies') ?? '[]';
   const savedMovieInfoArr = JSON.parse(savedMovieInfo);
-  console.log(savedMovieInfoArr[0]);
-  useEffect(() => {
-    getMovieInfo(savedMovieInfoArr[0])
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(true);
-        setLoading(false);
-      });
-  }, [savedMovieInfoArr[0]]);
 
-  console.log('dataID', data.genres?.[0].id);
+  useEffect(() => {
+    for (let i = 0; i < savedMovieInfoArr.length; i += 1) {
+      console.log('All saved movies', savedMovieInfoArr[i]);
+      getMovieInfo(savedMovieInfoArr[i])
+        .then((data) => {
+          setData(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(true);
+          setLoading(false);
+        });
+    }
+  }, [savedMovieInfoArr[0]]);
 
   if (loading) {
     return (
@@ -57,6 +59,7 @@ export const FavoritesPage = () => {
           allGenres,
         }) => {
           return ( */}
+
       <FlexBoxes
         key={savedMovieInfoArr}
         posterPath={data.posterPath}

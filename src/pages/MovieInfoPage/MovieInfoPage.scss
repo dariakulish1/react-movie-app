@@ -77,6 +77,10 @@
         border: 1px solid black;
         color: black;
     }
+    &__button-to-add-to-fav:hover{
+        background: #e5e5e5;
+        transition: 0.2s;
+    }
     &__film-description {
         padding: 10px 0px 10px 0px;
         height: 150px;
