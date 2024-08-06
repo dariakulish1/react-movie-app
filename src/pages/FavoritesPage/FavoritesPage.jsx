@@ -1,8 +1,10 @@
 import './FavoritesPage.scss';
+import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FlexBoxes } from '../../components/FlexBoxes';
 import { Spinner } from '../../components/Spinner';
 import { getMovieInfo } from '../../services/getMovieInfo';
+import { PAGES } from '../../constants';
 
 export const FavoritesPage = () => {
   const [data, setData] = useState({});
@@ -14,8 +16,7 @@ export const FavoritesPage = () => {
 
   useEffect(() => {
     for (let i = 0; i < savedMovieInfoArr.length; i += 1) {
-      console.log('All saved movies', savedMovieInfoArr[i]);
-      getMovieInfo(savedMovieInfoArr[i])
+      Promise.all(savedMovieInfoArr[i])
         .then((data) => {
           setData(data);
           setLoading(false);
@@ -25,7 +26,7 @@ export const FavoritesPage = () => {
           setLoading(false);
         });
     }
-  }, [savedMovieInfoArr[0]]);
+  }, [savedMovieInfoArr]);
 
   if (loading) {
     return (
@@ -36,7 +37,14 @@ export const FavoritesPage = () => {
     );
   }
   if (isError) {
-    return <div className="container">Sorry, it is error</div>;
+    return (
+      <div className="error-message container">
+        <p>Sorry, it is error</p>
+        <NavLink to={PAGES.HOME} className="link-to-home">
+          Home
+        </NavLink>
+      </div>
+    );
   }
 
   const allGenres =
@@ -49,7 +57,7 @@ export const FavoritesPage = () => {
   return (
     <div className="saved-movie container inter">
       <h1 className="saved-movie__page-head">Favorites</h1>
-      {/* {data.map(
+      {data.map(
         ({
           posterPath,
           voteAverage,
@@ -58,9 +66,20 @@ export const FavoritesPage = () => {
           savedMovieInfoArr,
           allGenres,
         }) => {
-          return ( */}
-
-      <FlexBoxes
+          return (
+            <FlexBoxes
+              key={savedMovieInfoArr}
+              posterPath={posterPath}
+              voteAverage={voteAverage}
+              title={title}
+              originalTitle={originalTitle}
+              allGenres={allGenres}
+              movieId={savedMovieInfoArr}
+            />
+          );
+        },
+      )}
+      {/* <FlexBoxes
         key={savedMovieInfoArr}
         posterPath={data.posterPath}
         voteAverage={data.voteAverage}
@@ -68,10 +87,7 @@ export const FavoritesPage = () => {
         originalTitle={data.originalTitle}
         allGenres={allGenres}
         movieId={savedMovieInfoArr}
-      />
-      {/* );
-        },
-      )} */}
+      /> */}
     </div>
   );
 };
