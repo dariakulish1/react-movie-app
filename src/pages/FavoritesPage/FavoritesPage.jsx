@@ -1,31 +1,32 @@
 import './FavoritesPage.scss';
 import { NavLink } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { FlexBoxes } from '../../components/FlexBoxes';
 import { Spinner } from '../../components/Spinner';
 import { getMovieInfo } from '../../services/getMovieInfo';
 import { PAGES } from '../../constants';
 
 export const FavoritesPage = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const savedMovieInfo = localStorage.getItem('savedMovies') ?? '[]';
-  const savedMovieInfoArr = JSON.parse(savedMovieInfo);
+  const savedMovieInfoArr = useMemo(() => {
+    return JSON.parse(savedMovieInfo);
+  }, [savedMovieInfo]);
 
   useEffect(() => {
-    for (let i = 0; i < savedMovieInfoArr.length; i += 1) {
-      Promise.all(savedMovieInfoArr[i])
-        .then((data) => {
-          setData(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError(true);
-          setLoading(false);
-        });
-    }
+    const promise = savedMovieInfoArr.map((movieId) => getMovieInfo(movieId));
+    Promise.all(promise)
+      .then((movie) => {
+        setData(movie);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
+        setLoading(false);
+      });
   }, [savedMovieInfoArr]);
 
   if (loading) {
@@ -47,13 +48,6 @@ export const FavoritesPage = () => {
     );
   }
 
-  const allGenres =
-    data.genres
-      ?.map((genre) => genre.name)
-      .slice(0, 3)
-      .join(' • ') ?? [];
-  console.log('genres', allGenres);
-
   return (
     <div className="saved-movie container inter">
       <h1 className="saved-movie__page-head">Favorites</h1>
@@ -63,31 +57,28 @@ export const FavoritesPage = () => {
           voteAverage,
           title,
           originalTitle,
-          savedMovieInfoArr,
-          allGenres,
+          savedMovieInfo,
+          genres,
         }) => {
+          const allGenres =
+            genres
+              ?.map((genre) => genre.name)
+              .slice(0, 3)
+              .join(' • ') ?? [];
+          console.log('genres', allGenres);
           return (
             <FlexBoxes
-              key={savedMovieInfoArr}
+              key={savedMovieInfo}
               posterPath={posterPath}
               voteAverage={voteAverage}
               title={title}
               originalTitle={originalTitle}
               allGenres={allGenres}
-              movieId={savedMovieInfoArr}
+              movieId={savedMovieInfo}
             />
           );
         },
       )}
-      {/* <FlexBoxes
-        key={savedMovieInfoArr}
-        posterPath={data.posterPath}
-        voteAverage={data.voteAverage}
-        title={data.title}
-        originalTitle={data.originalTitle}
-        allGenres={allGenres}
-        movieId={savedMovieInfoArr}
-      /> */}
     </div>
   );
 };

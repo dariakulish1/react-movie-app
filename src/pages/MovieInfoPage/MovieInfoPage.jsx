@@ -44,7 +44,7 @@ export const MovieInfoPage = ({ genres }) => {
     const localMovie = JSON.parse(localStorage.getItem('savedMovies') ?? '[]');
     const textState =
       localMovie.indexOf(movieId) === -1
-        ? 'Added to favorite'
+        ? 'Remove from favorite'
         : 'Add to favorite';
     setText(textState);
   }, [movieId]);
