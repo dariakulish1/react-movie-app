@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
 import { CastBox } from '../../components/CastBox';
 import { Spinner } from '../../components/Spinner';
@@ -21,6 +21,17 @@ export const MovieInfoPage = ({ genres }) => {
   const [data, setData] = useState({});
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  // чи є movieId в localStorage
+  const getFoo = useCallback(() => {
+    const favMovies = localStorage.getItem('savedMovies') ?? '[]';
+    const favMoviesArr = JSON.parse(favMovies);
+    const movieId2 = parseInt(movieId, 10);
+    const bool = favMoviesArr.includes(movieId2);
+    if (bool === true) {
+      return true;
+    }
+    return false;
+  }, [movieId]);
 
   useEffect(() => {
     getMovieInfo(movieId)
@@ -39,7 +50,19 @@ export const MovieInfoPage = ({ genres }) => {
       .catch((err) => {});
   }, [movieId]);
 
-  const [favMovieText, setText] = useState('Add to favorite');
+  const [favMovieText, setText] = useState('');
+  useEffect(() => {
+    const isAdded = getFoo(); // movie added in localStorage
+
+    if (isAdded === true) {
+      const updatedText = 'Remove from favorite';
+      setText(updatedText);
+    } else {
+      const updatedText = 'Add to favorite';
+      setText(updatedText);
+    }
+    // setText(updatedText);
+  }, [getFoo]);
 
   if (loading) {
     return (
@@ -69,6 +92,14 @@ export const MovieInfoPage = ({ genres }) => {
   } = data;
 
   const handleButtonClick = () => {
+    const isRemoved = getFoo();
+    if (isRemoved === false) {
+      const updatedText = 'Remove from favorite';
+      setText(updatedText);
+    } else {
+      const updatedText = 'Add to favorite';
+      setText(updatedText);
+    }
     const favMovies = localStorage.getItem('savedMovies') ?? '[]';
     const favMoviesNum = JSON.parse(favMovies);
     const movieId2 = parseInt(movieId, 10);

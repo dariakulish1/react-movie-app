@@ -60,6 +60,7 @@ export const FavoritesPage = () => {
             originalTitle,
             savedMovieInfoArr,
             genres,
+            id,
           }) => {
             const allGenres =
               genres
@@ -67,15 +68,16 @@ export const FavoritesPage = () => {
                 .slice(0, 3)
                 .join(' • ') ?? [];
             console.log('genres', allGenres);
+
             return (
               <FlexBoxes
-                key={savedMovieInfo}
+                key={posterPath}
                 posterPath={posterPath}
                 voteAverage={voteAverage}
                 title={title}
                 originalTitle={originalTitle}
                 allGenres={allGenres}
-                movieId={savedMovieInfoArr}
+                movieId={id}
               />
             );
           },
