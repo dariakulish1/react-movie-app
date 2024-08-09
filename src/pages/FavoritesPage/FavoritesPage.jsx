@@ -51,34 +51,36 @@ export const FavoritesPage = () => {
   return (
     <div className="saved-movie container inter">
       <h1 className="saved-movie__page-head">Favorites</h1>
-      {data.map(
-        ({
-          posterPath,
-          voteAverage,
-          title,
-          originalTitle,
-          savedMovieInfo,
-          genres,
-        }) => {
-          const allGenres =
-            genres
-              ?.map((genre) => genre.name)
-              .slice(0, 3)
-              .join(' • ') ?? [];
-          console.log('genres', allGenres);
-          return (
-            <FlexBoxes
-              key={savedMovieInfo}
-              posterPath={posterPath}
-              voteAverage={voteAverage}
-              title={title}
-              originalTitle={originalTitle}
-              allGenres={allGenres}
-              movieId={savedMovieInfo}
-            />
-          );
-        },
-      )}
+      <div className="saved-movie__favorites-list">
+        {data.map(
+          ({
+            posterPath,
+            voteAverage,
+            title,
+            originalTitle,
+            savedMovieInfoArr,
+            genres,
+          }) => {
+            const allGenres =
+              genres
+                ?.map((genre) => genre.name)
+                .slice(0, 3)
+                .join(' • ') ?? [];
+            console.log('genres', allGenres);
+            return (
+              <FlexBoxes
+                key={savedMovieInfo}
+                posterPath={posterPath}
+                voteAverage={voteAverage}
+                title={title}
+                originalTitle={originalTitle}
+                allGenres={allGenres}
+                movieId={savedMovieInfoArr}
+              />
+            );
+          },
+        )}
+      </div>
     </div>
   );
 };

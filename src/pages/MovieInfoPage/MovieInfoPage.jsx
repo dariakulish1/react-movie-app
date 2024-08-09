@@ -40,14 +40,6 @@ export const MovieInfoPage = ({ genres }) => {
   }, [movieId]);
 
   const [favMovieText, setText] = useState('Add to favorite');
-  useEffect(() => {
-    const localMovie = JSON.parse(localStorage.getItem('savedMovies') ?? '[]');
-    const textState =
-      localMovie.indexOf(movieId) === -1
-        ? 'Remove from favorite'
-        : 'Add to favorite';
-    setText(textState);
-  }, [movieId]);
 
   if (loading) {
     return (
@@ -88,6 +80,11 @@ export const MovieInfoPage = ({ genres }) => {
     }
     const favMoviesStr = JSON.stringify(favMoviesNum);
     localStorage.setItem('savedMovies', favMoviesStr);
+    const updatedText =
+      favMovies.indexOf(movieId2) !== -1
+        ? 'Add to favorite'
+        : 'Remove from favorite';
+    setText(updatedText);
   };
 
   return (

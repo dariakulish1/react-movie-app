@@ -1,5 +1,9 @@
 .saved-movie {
     padding: 40px 24px;
+    &__favorites-list {
+        display: flex;
+        flex-wrap: wrap;
+    }
     &__page-head {
         font-size: 40px;
         font-weight: 700;
