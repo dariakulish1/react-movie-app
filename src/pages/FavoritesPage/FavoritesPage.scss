@@ -1,0 +1,18 @@
+.saved-movie {
+    padding: 40px 24px;
+    &__favorites-list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    &__page-head {
+        font-size: 40px;
+        font-weight: 700;
+    }
+    &__bounding {
+        padding: 10px;
+    }
+}
+.error-message {
+    padding-top: 30px;
+    text-align: center;
+}
