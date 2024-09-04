@@ -6,16 +6,10 @@ import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
 
 const propTypes = {
-  genres: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-    }),
-  ).isRequired,
   genLoading: PropTypes.bool.isRequired,
 };
 
-export const HomePage = ({ genres, genLoading }) => {
+export const HomePage = ({ genLoading }) => {
   const [data, setData] = useState([]);
   const [findMovie, setFindMovie] = useState([]);
   const [isFound, setFound] = useState(false);
@@ -45,7 +39,7 @@ export const HomePage = ({ genres, genLoading }) => {
       .catch((err) => {
         setError(true);
       });
-  }, [genres]);
+  }, []);
 
   const handleMovieChange = (inputText) => {
     getRequest(`search/movie?query=${inputText}&include_adult=false&`)
@@ -82,7 +76,7 @@ export const HomePage = ({ genres, genLoading }) => {
       {notFound ? (
         <div className="container">Movie is not found</div>
       ) : (
-        <MovieList movies={isFound ? findMovie : data} genres={genres} />
+        <MovieList movies={isFound ? findMovie : data} />
       )}
     </section>
   );

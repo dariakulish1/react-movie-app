@@ -53,21 +53,12 @@ export const FavoritesPage = () => {
       <h1 className="saved-movie__page-head">Favorites</h1>
       <div className="saved-movie__favorites-list">
         {data.map(
-          ({
-            posterPath,
-            voteAverage,
-            title,
-            originalTitle,
-            savedMovieInfoArr,
-            genres,
-            id,
-          }) => {
+          ({ posterPath, voteAverage, title, originalTitle, genres, id }) => {
             const allGenres =
               genres
                 ?.map((genre) => genre.name)
                 .slice(0, 3)
                 .join(' • ') ?? [];
-            console.log('genres', allGenres);
 
             return (
               <FlexBoxes
