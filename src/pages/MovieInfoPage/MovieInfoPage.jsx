@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
+import { toast } from 'react-toastify';
 import { CastBox } from '../../components/CastBox';
 import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
@@ -31,11 +32,9 @@ export const MovieInfoPage = () => {
     if (addOrRemove) {
       const updatedText = 'Remove from favorite';
       setText(updatedText);
-      console.log('remove');
     } else {
       const updatedText = 'Add to favorite';
       setText(updatedText);
-      console.log('Add');
     }
   }, []);
 
@@ -49,7 +48,7 @@ export const MovieInfoPage = () => {
         setError(true);
         setLoading(false);
       });
-    getRequest(`movie/${movieId}/videos?`)
+    getRequest(`movie/${movieId}/videos?`, 1)
       .then((videos) => {
         setVideos(videos.results);
       })
@@ -58,7 +57,6 @@ export const MovieInfoPage = () => {
 
   useEffect(() => {
     const isAdded = checkMovieId();
-    console.log('isAdded', isAdded);
     setBtnText(isAdded);
   }, [checkMovieId, setBtnText]);
 
@@ -94,13 +92,17 @@ export const MovieInfoPage = () => {
     setBtnText(!isAdded);
     const parsedArr = getParsedArr();
     const movieIdIndex = parsedArr.indexOf(movieIdNum);
+    let notifyMessage = '';
     if (!isAdded) {
       parsedArr.push(movieIdNum);
+      notifyMessage = `${title} added successfully`;
     } else {
       parsedArr.splice(movieIdIndex, 1);
+      notifyMessage = `${title} has been removed`;
     }
     const favMoviesStr = JSON.stringify(parsedArr);
     localStorage.setItem('savedMovies', favMoviesStr);
+    toast(notifyMessage);
   };
 
   return (

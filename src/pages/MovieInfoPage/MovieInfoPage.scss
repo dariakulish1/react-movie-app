@@ -60,14 +60,12 @@
         width: 360px;
         padding: 10px 0px 0px 0px;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
     }
     &__button-to-watch,&__button-to-add-to-fav {
         background: black;
         color: white;
         border-radius: 8px;
-        width: 174px;
-        height: 44px;
         padding: 0px 20px 0px 20px;
         font-weight: 500;
         font-size: 15px;

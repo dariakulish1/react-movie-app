@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './FlexBoxes.scss';
 import { SavedBounding } from '../../images/SavedBounding';
 import solidStar from '../../images/star-solid.svg';
+import { PAGES } from '../../constants';
 
 const propTypes = {
   movieId: PropTypes.number.isRequired,
@@ -51,19 +52,12 @@ export const FlexBoxes = ({
 
     toast(notifyMessage, {
       position: 'top-center',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
     });
   };
 
   return (
     <div className="flex-box">
-      <Link to={`/movie/${movieId}`}>
+      <Link to={`${PAGES.MOVIE}/${movieId}`}>
         <img
           className="flex-box__server-img"
           src={`https://image.tmdb.org/t/p/w185/${posterPath}`}
@@ -89,18 +83,6 @@ export const FlexBoxes = ({
         >
           <SavedBounding fillColor={fillColor} />
         </button>
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
       </div>
       <Link className="flex-box" to={`/movie/${movieId}`}>
         <div className="flex-box__movie-titles">

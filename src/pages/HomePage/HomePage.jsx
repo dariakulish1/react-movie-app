@@ -4,6 +4,7 @@ import './HomePage.scss';
 import { MovieList } from '../../components/MovieList';
 import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
+import { TrackVisible } from '../../components/TrackVisible/TrackVisible';
 
 const propTypes = {
   genLoading: PropTypes.bool.isRequired,
@@ -31,7 +32,7 @@ export const HomePage = ({ genLoading }) => {
   };
 
   useEffect(() => {
-    getRequest('movie/popular?')
+    getRequest('movie/popular?', 1)
       .then((data) => {
         setData(data.results);
         setLoading(false);
@@ -42,7 +43,7 @@ export const HomePage = ({ genLoading }) => {
   }, []);
 
   const handleMovieChange = (inputText) => {
-    getRequest(`search/movie?query=${inputText}&include_adult=false&`)
+    getRequest(`search/movie?query=${inputText}&include_adult=false&`, 1)
       .then((response) => {
         setFindMovie(response.results);
       })
@@ -76,7 +77,12 @@ export const HomePage = ({ genLoading }) => {
       {notFound ? (
         <div className="container">Movie is not found</div>
       ) : (
-        <MovieList movies={isFound ? findMovie : data} />
+        <>
+          <MovieList movies={isFound ? findMovie : data} />
+          <div className="in-view-home">
+            <TrackVisible />
+          </div>
+        </>
       )}
     </section>
   );

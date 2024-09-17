@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { HomePage } from '../pages/HomePage';
 import { FavoritesPage } from '../pages/FavoritesPage';
 import { Layout } from './Layout';
@@ -9,19 +10,15 @@ import { getRequest } from '../utils/url';
 import './style/App.scss';
 import { PAGES } from '../constants';
 import { addGenres } from '../redux/slices';
-import { genresSelector } from '../redux/selectors';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const genres = useSelector(genresSelector);
 
-  // const [genres, setGenres] = useState([]);
   const [genLoading, setGenLoading] = useState(true);
 
   useEffect(() => {
-    getRequest('genre/movie/list?')
+    getRequest('genre/movie/list?', 1)
       .then(({ genres }) => {
-        // setGenres(data.genres);
         setGenLoading(false);
         dispatch(addGenres({ genres }));
       })
@@ -32,6 +29,18 @@ export const App = () => {
 
   return (
     <div className="movie-div">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Routes>
         <Route element={<Layout />}>
           <Route
@@ -39,10 +48,7 @@ export const App = () => {
             element={<HomePage genLoading={genLoading} />}
           />
           <Route path={PAGES.FAVORITES} element={<FavoritesPage />} />
-          <Route
-            path={`${PAGES.MOVIE}/:movieId`}
-            element={<MovieInfoPage genres={genres} />}
-          />
+          <Route path={`${PAGES.MOVIE}/:movieId`} element={<MovieInfoPage />} />
         </Route>
       </Routes>
     </div>
