@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './FlexBoxes.scss';
 import { SavedBounding } from '../../images/SavedBounding';
 import solidStar from '../../images/star-solid.svg';
+import { PAGES } from '../../constants';
 
 const propTypes = {
   movieId: PropTypes.number.isRequired,
@@ -11,7 +14,7 @@ const propTypes = {
   originalTitle: PropTypes.string.isRequired,
   voteAverage: PropTypes.number.isRequired,
   posterPath: PropTypes.string.isRequired,
-  allGenres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  allGenres: PropTypes.string.isRequired,
 };
 
 export const FlexBoxes = ({
@@ -36,21 +39,25 @@ export const FlexBoxes = ({
     const savedMovies = localStorage.getItem('savedMovies') ?? '[]';
     const savedMoviesNum = JSON.parse(savedMovies);
     const movieIdIndex = savedMoviesNum.indexOf(movieId);
-
+    let notifyMessage = '';
     if (movieIdIndex === -1) {
       savedMoviesNum.push(movieId);
+      notifyMessage = `${title} added successfully`;
     } else {
       savedMoviesNum.splice(movieIdIndex, 1);
+      notifyMessage = `${title} has been removed`;
     }
-
     const savedMoviesStr = JSON.stringify(savedMoviesNum);
-    console.log(savedMoviesStr);
     localStorage.setItem('savedMovies', savedMoviesStr);
+
+    toast(notifyMessage, {
+      position: 'top-center',
+    });
   };
 
   return (
     <div className="flex-box">
-      <Link to={`/movie/${movieId}`}>
+      <Link to={`${PAGES.MOVIE}/${movieId}`}>
         <img
           className="flex-box__server-img"
           src={`https://image.tmdb.org/t/p/w185/${posterPath}`}

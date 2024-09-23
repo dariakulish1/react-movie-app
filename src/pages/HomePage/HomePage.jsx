@@ -4,18 +4,13 @@ import './HomePage.scss';
 import { MovieList } from '../../components/MovieList';
 import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
+import { TrackVisible } from '../../components/TrackVisible/TrackVisible';
 
 const propTypes = {
-  genres: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-    }),
-  ).isRequired,
   genLoading: PropTypes.bool.isRequired,
 };
 
-export const HomePage = ({ genres, genLoading }) => {
+export const HomePage = ({ genLoading }) => {
   const [data, setData] = useState([]);
   const [findMovie, setFindMovie] = useState([]);
   const [isFound, setFound] = useState(false);
@@ -37,7 +32,7 @@ export const HomePage = ({ genres, genLoading }) => {
   };
 
   useEffect(() => {
-    getRequest('movie/popular?')
+    getRequest('movie/popular?', 1)
       .then((data) => {
         setData(data.results);
         setLoading(false);
@@ -45,10 +40,10 @@ export const HomePage = ({ genres, genLoading }) => {
       .catch((err) => {
         setError(true);
       });
-  }, [genres]);
+  }, []);
 
   const handleMovieChange = (inputText) => {
-    getRequest(`search/movie?query=${inputText}&include_adult=false&`)
+    getRequest(`search/movie?query=${inputText}&include_adult=false&`, 1)
       .then((response) => {
         setFindMovie(response.results);
       })
@@ -82,7 +77,12 @@ export const HomePage = ({ genres, genLoading }) => {
       {notFound ? (
         <div className="container">Movie is not found</div>
       ) : (
-        <MovieList movies={isFound ? findMovie : data} genres={genres} />
+        <>
+          <MovieList movies={isFound ? findMovie : data} />
+          <div className="in-view-home">
+            <TrackVisible />
+          </div>
+        </>
       )}
     </section>
   );

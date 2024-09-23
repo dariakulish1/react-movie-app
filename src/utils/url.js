@@ -5,12 +5,12 @@ const options = {
   headers,
 };
 
-export const urlApi = (url) => {
-  return `https://api.themoviedb.org/3/${url}language=en-US&page=1`;
+export const urlApi = (url, pageNum) => {
+  return `https://api.themoviedb.org/3/${url}language=en-US&page=${pageNum}`;
 };
 
-export const getRequest = (url) => {
-  return fetch(urlApi(url), options).then((response) => {
+export const getRequest = (url, pageNum) => {
+  return fetch(urlApi(url, pageNum), options).then((response) => {
     if (!response.ok) {
       return Promise.reject(Error('Error'));
     }

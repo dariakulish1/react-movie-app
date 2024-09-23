@@ -10,11 +10,6 @@ export const CastBox = () => {
   const [data, setData] = useState([]);
   const [isError, setError] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  }, []);
 
   useEffect(() => {
     getMovieCast(movieId)
@@ -40,25 +35,32 @@ export const CastBox = () => {
 
   return (
     <div className="info-cast-box">
-      {data.map(({ character, name, profile_path: profilePath }) => {
-        return (
-          <div key={profilePath} className="info-cast-box__all-cast-info">
-            <img
-              className="info-cast-box__actor-photo"
-              src={
-                profilePath
-                  ? `https://image.tmdb.org/t/p/w185/${profilePath}`
-                  : unnamed
-              }
-              alt="actor"
-            />
-            <div className="info-cast-box__info-about-actor inter">
-              <p className="info-cast-box__actors-name">{name}</p>
-              <p className="info-cast-box__actors-role">{character}</p>
+      {data.map(
+        ({
+          credit_id: creditId,
+          character,
+          name,
+          profile_path: profilePath,
+        }) => {
+          return (
+            <div key={creditId} className="info-cast-box__all-cast-info">
+              <img
+                className="info-cast-box__actor-photo"
+                src={
+                  profilePath
+                    ? `https://image.tmdb.org/t/p/w185/${profilePath}`
+                    : unnamed
+                }
+                alt="actor"
+              />
+              <div className="info-cast-box__info-about-actor inter">
+                <p className="info-cast-box__actors-name">{name}</p>
+                <p className="info-cast-box__actors-role">{character}</p>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        },
+      )}
     </div>
   );
 };

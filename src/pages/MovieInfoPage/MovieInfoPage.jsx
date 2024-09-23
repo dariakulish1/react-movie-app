@@ -1,37 +1,42 @@
-import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
+import { toast } from 'react-toastify';
 import { CastBox } from '../../components/CastBox';
 import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
 import { getMovieInfo } from '../../services/getMovieInfo';
 
-const propTypes = {
-  genres: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-    }),
-  ).isRequired,
-};
-export const MovieInfoPage = ({ genres }) => {
+export const MovieInfoPage = () => {
   const { movieId } = useParams();
   const [videos, setVideos] = useState([]);
   const [data, setData] = useState({});
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  // чи є movieId в localStorage
-  const getFoo = useCallback(() => {
+  const movieIdNum = parseInt(movieId, 10);
+
+  const getParsedArr = () => {
     const favMovies = localStorage.getItem('savedMovies') ?? '[]';
     const favMoviesArr = JSON.parse(favMovies);
-    const movieId2 = parseInt(movieId, 10);
-    const bool = favMoviesArr.includes(movieId2);
-    if (bool === true) {
-      return true;
+    return favMoviesArr;
+  };
+
+  const checkMovieId = useCallback(() => {
+    const parsedArr = getParsedArr();
+    const bool = parsedArr.includes(movieIdNum);
+    return bool;
+  }, [movieIdNum]);
+
+  const [favMovieText, setText] = useState('');
+  const setBtnText = useCallback((addOrRemove) => {
+    if (addOrRemove) {
+      const updatedText = 'Remove from favorite';
+      setText(updatedText);
+    } else {
+      const updatedText = 'Add to favorite';
+      setText(updatedText);
     }
-    return false;
-  }, [movieId]);
+  }, []);
 
   useEffect(() => {
     getMovieInfo(movieId)
@@ -43,26 +48,17 @@ export const MovieInfoPage = ({ genres }) => {
         setError(true);
         setLoading(false);
       });
-    getRequest(`movie/${movieId}/videos?`)
+    getRequest(`movie/${movieId}/videos?`, 1)
       .then((videos) => {
         setVideos(videos.results);
       })
       .catch((err) => {});
   }, [movieId]);
 
-  const [favMovieText, setText] = useState('');
   useEffect(() => {
-    const isAdded = getFoo(); // movie added in localStorage
-
-    if (isAdded === true) {
-      const updatedText = 'Remove from favorite';
-      setText(updatedText);
-    } else {
-      const updatedText = 'Add to favorite';
-      setText(updatedText);
-    }
-    // setText(updatedText);
-  }, [getFoo]);
+    const isAdded = checkMovieId();
+    setBtnText(isAdded);
+  }, [checkMovieId, setBtnText]);
 
   if (loading) {
     return (
@@ -92,30 +88,21 @@ export const MovieInfoPage = ({ genres }) => {
   } = data;
 
   const handleButtonClick = () => {
-    const isRemoved = getFoo();
-    if (isRemoved === false) {
-      const updatedText = 'Remove from favorite';
-      setText(updatedText);
+    const isAdded = checkMovieId();
+    setBtnText(!isAdded);
+    const parsedArr = getParsedArr();
+    const movieIdIndex = parsedArr.indexOf(movieIdNum);
+    let notifyMessage = '';
+    if (!isAdded) {
+      parsedArr.push(movieIdNum);
+      notifyMessage = `${title} added successfully`;
     } else {
-      const updatedText = 'Add to favorite';
-      setText(updatedText);
+      parsedArr.splice(movieIdIndex, 1);
+      notifyMessage = `${title} has been removed`;
     }
-    const favMovies = localStorage.getItem('savedMovies') ?? '[]';
-    const favMoviesNum = JSON.parse(favMovies);
-    const movieId2 = parseInt(movieId, 10);
-    const movieIdIndex = favMoviesNum.indexOf(movieId2);
-    if (movieIdIndex === -1) {
-      favMoviesNum.push(movieId2);
-    } else {
-      favMoviesNum.splice(movieIdIndex, 1);
-    }
-    const favMoviesStr = JSON.stringify(favMoviesNum);
+    const favMoviesStr = JSON.stringify(parsedArr);
     localStorage.setItem('savedMovies', favMoviesStr);
-    const updatedText =
-      favMovies.indexOf(movieId2) !== -1
-        ? 'Add to favorite'
-        : 'Remove from favorite';
-    setText(updatedText);
+    toast(notifyMessage);
   };
 
   return (
@@ -214,5 +201,3 @@ export const MovieInfoPage = ({ genres }) => {
     </div>
   );
 };
-
-MovieInfoPage.propTypes = propTypes;
