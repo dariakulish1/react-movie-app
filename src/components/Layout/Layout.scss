@@ -1,8 +1,10 @@
 .nav-div{
     &__nav-top {
+        position: fixed;
         width: 100%;
         height: 56px;
         background: #1A1A1A;
+        z-index: 1002;
     }
     &__pages {
         width: 100%;

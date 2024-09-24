@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './FlexBoxes.scss';
-import { SavedBounding } from '../../images/SavedBounding';
+import { SavedBounding } from '../../images/savedBounding';
 import solidStar from '../../images/star-solid.svg';
 import { PAGES } from '../../constants';
 

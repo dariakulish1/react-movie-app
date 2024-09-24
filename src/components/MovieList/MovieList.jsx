@@ -49,7 +49,7 @@ export const MovieList = ({ movies, pagesNum }) => {
 
           return (
             <FlexBoxes
-              key={id}
+              key={posterPath}
               allGenres={allGenres}
               title={title}
               movieId={id}
