@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { InView, useInView } from 'react-intersection-observer';
 import './MovieList.scss';
 import { FlexBoxes } from '../FlexBoxes';
 import { genresSelector } from '../../redux/selectors';
-import { TrackVisible } from '../TrackVisible/TrackVisible';
 
 const propTypes = {
   movies: PropTypes.arrayOf(
@@ -19,7 +17,7 @@ const propTypes = {
   ).isRequired,
 };
 
-export const MovieList = ({ movies, pagesNum }) => {
+export const MovieList = ({ movies }) => {
   const genres = useSelector(genresSelector);
   return (
     <div className="div-list container">
@@ -49,7 +47,7 @@ export const MovieList = ({ movies, pagesNum }) => {
 
           return (
             <FlexBoxes
-              key={posterPath}
+              key={id}
               allGenres={allGenres}
               title={title}
               movieId={id}

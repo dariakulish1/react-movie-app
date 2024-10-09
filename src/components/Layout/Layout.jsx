@@ -1,9 +1,11 @@
 import './Layout.scss';
+import { useTranslation } from 'react-i18next';
 import { NavLink, Outlet } from 'react-router-dom';
 import cinefilm from '../../images/far magnifying-glass.svg';
 import { PAGES } from '../../constants';
 
 export const Layout = () => {
+  const { t } = useTranslation();
   return (
     <div className="nav-div">
       <header className="nav-div__nav-top">
@@ -17,7 +19,7 @@ export const Layout = () => {
             Strichka
           </NavLink>
           <NavLink className="nav-div__favorite-movie" to={PAGES.FAVORITES}>
-            Favorites
+            {t('main.favorites')}
           </NavLink>
         </div>
       </header>

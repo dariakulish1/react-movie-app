@@ -1,0 +1,17 @@
+{
+  "title": "Willkomen zu react und react-i18next",
+  "main": {
+    "header": "Willkomen zu react und react-i18next",
+    "input": "Filmnamen schreiben...",
+    "notFound": "Film wurde nicht gefunden",
+    "favorites": "Favoriten",
+    "back": "Zurück",
+    "rating": "Bewertung",
+    "releaseData": "Daten freigeben",
+    "genre": "Genre",
+    "runtime": "Laufzeit",
+    "watch": "Film ansehen",
+    "trailers": "Trailer",
+    "cast": "Besetzung"
+  }
+}

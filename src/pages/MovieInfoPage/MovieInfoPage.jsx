@@ -1,11 +1,13 @@
 import { Link, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import './MovieInfoPage.scss';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { CastBox } from '../../components/CastBox';
 import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
 import { getMovieInfo } from '../../services/getMovieInfo';
+import { LangBtn } from '../../components/LangBtns';
 
 export const MovieInfoPage = () => {
   const { movieId } = useParams();
@@ -14,6 +16,7 @@ export const MovieInfoPage = () => {
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const movieIdNum = parseInt(movieId, 10);
+  const { t } = useTranslation();
 
   const getParsedArr = () => {
     const favMovies = localStorage.getItem('savedMovies') ?? '[]';
@@ -48,7 +51,7 @@ export const MovieInfoPage = () => {
         setError(true);
         setLoading(false);
       });
-    getRequest(`movie/${movieId}/videos?`, 1)
+    getRequest(`movie/${movieId}/videos?`, 'bg', 1)
       .then((videos) => {
         setVideos(videos.results);
       })
@@ -107,13 +110,14 @@ export const MovieInfoPage = () => {
 
   return (
     <div className="info-box container">
+      <LangBtn />
       <div className="info-box__back-case">
         <Link
           className="info-box__back-botton inter"
           to="#"
           onClick={() => window.history.back()}
         >
-          &#60; Back
+          &#60; {t('main.back')}
         </Link>
       </div>
       <div className="info-box__general-info">
@@ -128,22 +132,24 @@ export const MovieInfoPage = () => {
           <p className="info-box__server-movie-name inter">{title}</p>
           <p className="info-box__small-title inter">{originalTitle}</p>
           <p className="info-box__server-movie-rating inter">
-            Rating:{' '}
+            {t('main.rating')}:
             <span className="info-box__span-num">
               {voteAverage ? voteAverage.toFixed(1) : 0}
             </span>
           </p>
           <p className="info-box__server-data-release inter">
-            Release data:
+            {t('main.releaseData')}:
             <span className="info-box__span-data">{releaseDate}</span>
           </p>
           <p className="info-box__server-genres-info inter">
-            Genre:
+            {t('main.genre')}:
             <span className="info-box__span-genres">{allGenres}</span>
           </p>
           <p className="info-box__server-runtime-info inter">
-            Runtime:
-            <span className="info-box__span-runtime">{runtime} minutes</span>
+            {t('main.runtime')}:
+            <span className="info-box__span-runtime">
+              {t('main.runtime_minute', { count: runtime })}
+            </span>
           </p>
           <div className="info-box__buttons-box">
             <hr />
@@ -152,7 +158,7 @@ export const MovieInfoPage = () => {
                 type="button"
                 className="info-box__button-to-watch cursor inter"
               >
-                &#9658; Watch movie
+                &#9658; {t('main.watch')}:
               </button>
               <button
                 onClick={handleButtonClick}
@@ -170,7 +176,7 @@ export const MovieInfoPage = () => {
         </div>
       </div>
       <hr />
-      <p className="info-box__trailers-title inter">Trailers</p>
+      <p className="info-box__trailers-title inter">{t('main.trailers')}</p>
       <div className="info-box__trailer-video">
         <div className="info-box__video-with-title">
           {videos
@@ -194,7 +200,7 @@ export const MovieInfoPage = () => {
         </div>
       </div>
       <hr />
-      <p className="info-box__cast-title inter">Cast</p>
+      <p className="info-box__cast-title inter">{t('main.cast')}</p>
       <div className="info-box__cast-case">
         <CastBox />
       </div>

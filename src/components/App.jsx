@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { HomePage } from '../pages/HomePage';
@@ -17,7 +18,7 @@ export const App = () => {
   const [genLoading, setGenLoading] = useState(true);
 
   useEffect(() => {
-    getRequest('genre/movie/list?', 1)
+    getRequest('genre/movie/list?', 'bg', 1)
       .then(({ genres }) => {
         setGenLoading(false);
         dispatch(addGenres({ genres }));

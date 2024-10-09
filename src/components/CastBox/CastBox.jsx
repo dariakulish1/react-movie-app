@@ -12,7 +12,7 @@ export const CastBox = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    getMovieCast(movieId)
+    getMovieCast(movieId, 'bg')
       .then((data) => {
         setLoading(false);
         setData(data.cast);

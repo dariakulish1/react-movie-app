@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
-import debounce from 'debounce';
+import { useTranslation } from 'react-i18next';
+import { useDebounce } from 'use-debounce';
 import './HomePage.scss';
 import { MovieList } from '../../components/MovieList';
 import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
 import { TrackVisible } from '../../components/TrackVisible/TrackVisible';
+import { LangBtn } from '../../components/LangBtns';
 
 const propTypes = {
   genLoading: PropTypes.bool.isRequired,
@@ -20,23 +22,33 @@ export const HomePage = ({ genLoading }) => {
   const [inputText, setInputText] = useState('');
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
+  const [debouncedText] = useDebounce(inputText, 1000);
 
   const notFound = inputText.length > 0 && findMovie.length === 0;
 
-  const fetchMovies = useCallback((pageNum) => {
-    setIsFetching(true);
-    getRequest('movie/popular?', pageNum)
-      .then((data) => {
-        setData((prevData) => [...prevData, ...data.results]);
-        setLoading(false);
+  const fetchMovies = useCallback(
+    (pageNum) => {
+      if (pageNum > data.total_pages) {
         setIsFetching(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-        setIsFetching(false);
-      });
-  }, []);
+        return;
+      }
+      setIsFetching(true);
+      getRequest('movie/popular?', 'bg', pageNum)
+        .then((data) => {
+          setData((prevData) => [...prevData, ...data.results]);
+          setLoading(false);
+          setIsFetching(false);
+        })
+        .catch(() => {
+          setError(true);
+          setLoading(false);
+          setIsFetching(false);
+        });
+    },
+    [data.total_pages],
+  );
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchMovies(page);
@@ -44,20 +56,22 @@ export const HomePage = ({ genLoading }) => {
 
   const handleInputChange = (event) => {
     const { value } = event.target;
+    setInputText(value);
     if (value) {
       setFound(true);
-      handleMovieChange(value);
     } else {
       setFound(false);
     }
-    setInputText(value);
-    console.log('input: ', value);
   };
 
-  const debouncedHandleInputChange = debounce(handleInputChange, 200).trigger();
+  useEffect(() => {
+    if (debouncedText) {
+      handleMovieChange(debouncedText);
+    }
+  }, [debouncedText]);
 
   const handleMovieChange = (inputText) => {
-    getRequest(`search/movie?query=${inputText}&include_adult=false&`, 1)
+    getRequest(`search/movie?query=${inputText}&include_adult=false&`, 'bg', 1)
       .then((response) => {
         setFindMovie(response.results);
       })
@@ -67,7 +81,7 @@ export const HomePage = ({ genLoading }) => {
   };
 
   const loadMoreMovies = () => {
-    if (!isFetching) {
+    if (!isFetching && page < data.total_pages) {
       setPage((prevPage) => prevPage + 1);
     }
   };
@@ -96,22 +110,24 @@ export const HomePage = ({ genLoading }) => {
   if (isError) {
     return <div className="container">Sorry, an error occurred</div>;
   }
-
+  if (data.total_pages < page) return console.log('PageLimit');
   return (
     <section className="films-list container">
+      <LangBtn />
       <div className="films-list__search-bar">
         <input
           className="films-list__input"
           type="text"
-          placeholder="Write film name..."
+          placeholder={t('main.input')}
           value={inputText}
-          // onChange={handleInputChange}
-          onChange={debouncedHandleInputChange}
+          onChange={handleInputChange}
         />
+        <p>Actual value: {inputText}</p>
+        <p>Debounced value: {debouncedText}</p>
       </div>
 
       {notFound ? (
-        <div className="container">Movie not found</div>
+        <div className="container">{t('main.notFound')}</div>
       ) : (
         <>
           <MovieList movies={isFound ? findMovie : data} />

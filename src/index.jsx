@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider as StoreProvider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from './redux/store';
 import { App } from './components/App';
+import './i18n';
 
 import './index.scss';
 
@@ -12,7 +13,9 @@ root.render(
   <React.StrictMode>
     <StoreProvider store={store}>
       <BrowserRouter>
-        <App />
+        <Suspense fallback={<div>Loading</div>}>
+          <App />
+        </Suspense>
       </BrowserRouter>
     </StoreProvider>
   </React.StrictMode>,

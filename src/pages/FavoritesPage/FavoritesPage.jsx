@@ -1,12 +1,15 @@
 import './FavoritesPage.scss';
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlexBoxes } from '../../components/FlexBoxes';
 import { Spinner } from '../../components/Spinner';
 import { getMovieInfo } from '../../services/getMovieInfo';
 import { PAGES } from '../../constants';
+import { LangBtn } from '../../components/LangBtns';
 
 export const FavoritesPage = () => {
+  const { t } = useTranslation();
   const [data, setData] = useState([]);
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -50,7 +53,8 @@ export const FavoritesPage = () => {
 
   return (
     <div className="saved-movie container inter">
-      <h1 className="saved-movie__page-head">Favorites</h1>
+      <LangBtn />
+      <h1 className="saved-movie__page-head">{t('main.favorites')}</h1>
       <div className="saved-movie__favorites-list">
         {data.map(
           ({ posterPath, voteAverage, title, originalTitle, genres, id }) => {

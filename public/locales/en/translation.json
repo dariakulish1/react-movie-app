@@ -1,0 +1,19 @@
+{
+  "title": "Welcome to react and react-i18next",
+  "main": {
+    "header": "Welcome to the app!",
+    "input": "Write film name...",
+    "notFound": "Movie is not found",
+    "favorites": "Favorites",
+    "back": "Back",
+    "rating": "Rating",
+    "releaseData": "Release data",
+    "genre": "Genre",
+    "runtime": "Runtime",
+    "watch": "Watch movie",
+    "trailers": "Trailers",
+    "cast": "Cast",
+    "runtime_minute_one": "{{count}} minute",
+    "runtime_minute_other": "{{count}} minutes"
+  }
+}
