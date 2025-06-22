@@ -16,7 +16,7 @@ export const MovieInfoPage = () => {
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const movieIdNum = parseInt(movieId, 10);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const getParsedArr = () => {
     const favMovies = localStorage.getItem('savedMovies') ?? '[]';
@@ -42,7 +42,7 @@ export const MovieInfoPage = () => {
   }, []);
 
   useEffect(() => {
-    getMovieInfo(movieId)
+    getMovieInfo(movieId, i18n.language)
       .then((data) => {
         setData(data);
         setLoading(false);
@@ -51,12 +51,12 @@ export const MovieInfoPage = () => {
         setError(true);
         setLoading(false);
       });
-    getRequest(`movie/${movieId}/videos?`, 'bg', 1)
+    getRequest(`movie/${movieId}/videos?`, i18n.language, 1)
       .then((videos) => {
         setVideos(videos.results);
       })
       .catch((err) => {});
-  }, [movieId]);
+  }, [movieId, i18n.language]);
 
   useEffect(() => {
     const isAdded = checkMovieId();

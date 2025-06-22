@@ -16,9 +16,10 @@ export const App = () => {
   const dispatch = useDispatch();
 
   const [genLoading, setGenLoading] = useState(true);
+  const { i18n } = useTranslation();
 
   useEffect(() => {
-    getRequest('genre/movie/list?', 'bg', 1)
+    getRequest('genre/movie/list?', i18n.language, 1)
       .then(({ genres }) => {
         setGenLoading(false);
         dispatch(addGenres({ genres }));
@@ -26,7 +27,7 @@ export const App = () => {
       .catch(() => {
         setGenLoading(false);
       });
-  }, [dispatch]);
+  }, [dispatch, i18n.language]);
 
   return (
     <div className="movie-div">

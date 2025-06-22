@@ -2,7 +2,7 @@
   "title": "Welcome to react and react-i18next",
   "main": {
     "header": "Welcome to the app!",
-    "input": "Write film name...",
+    "input": "Write movie name...",
     "notFound": "Movie is not found",
     "favorites": "Favorites",
     "back": "Back",

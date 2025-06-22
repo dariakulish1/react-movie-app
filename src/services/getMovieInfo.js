@@ -1,7 +1,7 @@
 import { getRequest } from '../utils/url';
 
-export const getMovieInfo = (movieId) => {
-  return getRequest(`movie/${movieId}?`, 'bg', 1).then(
+export const getMovieInfo = (movieId, lang) => {
+  return getRequest(`movie/${movieId}?`, lang, 1).then(
     ({
       poster_path: posterPath,
       original_title: originalTitle,

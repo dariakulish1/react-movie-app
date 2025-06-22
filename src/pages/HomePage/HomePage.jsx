@@ -7,7 +7,7 @@ import { MovieList } from '../../components/MovieList';
 import { Spinner } from '../../components/Spinner';
 import { getRequest } from '../../utils/url';
 import { TrackVisible } from '../../components/TrackVisible/TrackVisible';
-import { LangBtn } from '../../components/LangBtns';
+import { LangBtn, locales } from '../../components/LangBtns';
 
 const propTypes = {
   genLoading: PropTypes.bool.isRequired,
@@ -23,17 +23,18 @@ export const HomePage = ({ genLoading }) => {
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const [debouncedText] = useDebounce(inputText, 1000);
+  const { t, i18n } = useTranslation();
 
   const notFound = inputText.length > 0 && findMovie.length === 0;
-
   const fetchMovies = useCallback(
     (pageNum) => {
       if (pageNum > data.total_pages) {
         setIsFetching(false);
         return;
       }
+      console.log(locales);
       setIsFetching(true);
-      getRequest('movie/popular?', 'bg', pageNum)
+      getRequest('movie/popular?', i18n.language, pageNum)
         .then((data) => {
           setData((prevData) => [...prevData, ...data.results]);
           setLoading(false);
@@ -45,10 +46,8 @@ export const HomePage = ({ genLoading }) => {
           setIsFetching(false);
         });
     },
-    [data.total_pages],
+    [data.total_pages, i18n.language],
   );
-
-  const { t } = useTranslation();
 
   useEffect(() => {
     fetchMovies(page);
@@ -64,21 +63,28 @@ export const HomePage = ({ genLoading }) => {
     }
   };
 
+  const handleMovieChange = useCallback(
+    (inputText) => {
+      getRequest(
+        `search/movie?query=${inputText}&include_adult=false&`,
+        i18n.language,
+        1,
+      )
+        .then((response) => {
+          setFindMovie(response.results);
+        })
+        .catch(() => {
+          setError(true);
+        });
+    },
+    [i18n.language],
+  );
+
   useEffect(() => {
     if (debouncedText) {
       handleMovieChange(debouncedText);
     }
-  }, [debouncedText]);
-
-  const handleMovieChange = (inputText) => {
-    getRequest(`search/movie?query=${inputText}&include_adult=false&`, 'bg', 1)
-      .then((response) => {
-        setFindMovie(response.results);
-      })
-      .catch(() => {
-        setError(true);
-      });
-  };
+  }, [debouncedText, handleMovieChange]);
 
   const loadMoreMovies = () => {
     if (!isFetching && page < data.total_pages) {
@@ -122,8 +128,6 @@ export const HomePage = ({ genLoading }) => {
           value={inputText}
           onChange={handleInputChange}
         />
-        <p>Actual value: {inputText}</p>
-        <p>Debounced value: {debouncedText}</p>
       </div>
 
       {notFound ? (

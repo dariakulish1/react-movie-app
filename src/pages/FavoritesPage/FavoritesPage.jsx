@@ -9,7 +9,7 @@ import { PAGES } from '../../constants';
 import { LangBtn } from '../../components/LangBtns';
 
 export const FavoritesPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState([]);
   const [isError, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,9 @@ export const FavoritesPage = () => {
   }, [savedMovieInfo]);
 
   useEffect(() => {
-    const promise = savedMovieInfoArr.map((movieId) => getMovieInfo(movieId));
+    const promise = savedMovieInfoArr.map((movieId) =>
+      getMovieInfo(movieId, i18n.language),
+    );
     Promise.all(promise)
       .then((movie) => {
         setData(movie);
@@ -30,7 +32,7 @@ export const FavoritesPage = () => {
         setError(true);
         setLoading(false);
       });
-  }, [savedMovieInfoArr]);
+  }, [savedMovieInfoArr, i18n.language]);
 
   if (loading) {
     return (

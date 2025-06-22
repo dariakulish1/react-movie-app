@@ -1,4 +1,5 @@
 import './CastBox.scss';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import unnamed from '../../images/unnamed.png';
@@ -10,9 +11,10 @@ export const CastBox = () => {
   const [data, setData] = useState([]);
   const [isError, setError] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const { i18n } = useTranslation();
 
   useEffect(() => {
-    getMovieCast(movieId, 'bg')
+    getMovieCast(movieId, i18n.language)
       .then((data) => {
         setLoading(false);
         setData(data.cast);
@@ -21,7 +23,7 @@ export const CastBox = () => {
         setLoading(false);
         setError(true);
       });
-  }, [movieId]);
+  }, [movieId, i18n.language]);
   if (isLoading) {
     return (
       <div>
