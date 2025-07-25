@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 export const locales = {
   en: { title: 'English' },
   it: { title: 'Italian' },
-  uk: { title: 'Ukrainian' },
+  ua: { title: 'Ukrainian' },
 };
 
 export const LangBtn = () => {

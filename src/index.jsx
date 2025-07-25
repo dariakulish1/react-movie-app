@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <StoreProvider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/react-movie-app">
         <Suspense fallback={<div>Loading</div>}>
           <App />
         </Suspense>
