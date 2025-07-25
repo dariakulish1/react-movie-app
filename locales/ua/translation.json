@@ -1,0 +1,19 @@
+{
+  "title": "Ласкаво просимо до react та react-i18next",
+  "main": {
+    "header": "Ласкаво просимо до застосунку!",
+    "input": "Напиши назву фільму...",
+    "notFound": "Фильм не знайдено...",
+    "favorites": "Вибране",
+    "back": "Назад",
+    "rating": "Рейтинг",
+    "releaseData": "Дані випуску",
+    "genre": "Жанр",
+    "runtime": "Час виконання",
+    "watch": "Дивитися фільм",
+    "trailers": "Трейлери",
+    "cast": "Aкторський склад",
+    "runtime_minute_one": "{{count}} хвилина",
+    "runtime_minute_other": "{{count}} хвилин"
+  }
+}

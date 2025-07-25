@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/react-movie-app/static/css/main.8623c346.css",
+    "main.js": "/react-movie-app/static/js/main.b099048a.js",
+    "static/media/unnamed.png": "/react-movie-app/static/media/unnamed.63f8588acbc918873814.png",
+    "static/media/far magnifying-glass.svg": "/react-movie-app/static/media/far magnifying-glass.f30367bac762ce5130f32a1f7e901a95.svg",
+    "index.html": "/react-movie-app/index.html",
+    "static/media/star-solid.svg": "/react-movie-app/static/media/star-solid.db06d45de7f5fa6c5053707ba0baed90.svg",
+    "static/media/getFetch.cjs": "/react-movie-app/static/media/getFetch.c4cca45e22bc1b2c7d0d.cjs",
+    "main.8623c346.css.map": "/react-movie-app/static/css/main.8623c346.css.map",
+    "main.b099048a.js.map": "/react-movie-app/static/js/main.b099048a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8623c346.css",
+    "static/js/main.b099048a.js"
+  ]
+}

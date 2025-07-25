@@ -1,0 +1,17 @@
+{
+  "title": "Benvenuti a React e react-i18next",
+  "main": {
+    "header": "Benvenuti nell'app!",
+    "input": "Scrivi il nome del film...",
+    "notFound": "Il film non è stato trovato",
+    "favorites": "Preferiti",
+    "back": "Torna",
+    "rating": "Valutazione",
+    "releaseData": "Dati di rilascio",
+    "genre": "Genere",
+    "runtime": "Durata",
+    "watch": "Guarda il film",
+    "trailers": "Rimorchi",
+    "cast": "Lancio"
+  }
+}
